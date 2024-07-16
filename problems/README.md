@@ -222,6 +222,24 @@ Given a sorted input array, return the two indices of  two elements which sums u
 
 `problems/practice_exercises/6_sum_target_value.py`
 
+## 7 - Sum Of Two Digits
+
+### *Problem Statement*:
+
+Compute the sum of two single digit numbers.
+
+### *Path*:
+`problems/practice_exercises/7_sum_of_two_digits.py`
+
+## 8 - Maximum Pairwise Product
+
+### *Problem Statement*:
+
+Given an integer \( n \) and a sequence of \( n \) non-negative integers, find the maximum value that can be obtained by multiplying two different elements from the sequence.
+
+### *Path*:
+`problems/practice_exercises/8_max_pairwise_prod.py`
+
 ## 19 -  Minimum Coin Change Problem
 
 ### *Problem Statement*:
