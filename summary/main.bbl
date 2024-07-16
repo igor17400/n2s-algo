@@ -1,0 +1,14 @@
+\begin{thebibliography}{}
+
+\bibitem[Cormen et~al., 2009]{10.5555/1614191}
+Cormen, T.~H., Leiserson, C.~E., Rivest, R.~L., and Stein, C. (2009).
+\newblock {\em Introduction to Algorithms, Third Edition}.
+\newblock The MIT Press, 3rd edition.
+
+\bibitem[Demaine et~al., 2020]{mit6006}
+Demaine, E., Ku, J., and Solomon, J. (2020).
+\newblock 6.006: Introduction to algorithms - spring 2020.
+\newblock MIT OpenCourseWare.
+\newblock Course Description: This course is an introduction to mathematical modeling of computational problems, as well as common algorithms, algorithmic paradigms, and data structures used to solve these problems. It emphasizes the relationship between algorithms and programming and introduces basic performance measures and analysis techniques.
+
+\end{thebibliography}
