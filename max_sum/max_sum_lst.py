@@ -11,7 +11,7 @@ def brute_force(lst):  # O(n^2)
 	return max_sum
 
 
-def kadanes(lst):  # O(n)
+def kadane(lst):  # O(n)
 	max_sum, curr_sum = lst[0], -m.inf
 	for el in lst:
 		curr_sum = max(curr_sum, 0)
@@ -42,5 +42,5 @@ def sliding_window(lst):  # O(n)
 lst = [13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 7]
 
 print(brute_force(lst))
-print(kadanes(lst))
+print(kadane(lst))
 print(sliding_window(lst))
