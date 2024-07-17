@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex main"] 1721124893 "main.aux" "main.bbl" "main" 1721124900 0
+["bibtex main"] 1721198722 "main.aux" "main.bbl" "main" 1721198729 0
   "./ResearchPaperBib.bib" 1721092404 1847 0d460087f1a6cc8304056fcd7699c547 ""
   "/usr/local/texlive/2023/texmf-dist/bibtex/bst/base/apalike.bst" 1292289607 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "main.aux" 1721124900 20986 a4387ede6e7563ecd5e6416a146b1010 "pdflatex"
+  "main.aux" 1721198728 21103 59e3710ea44bc3bb5b6d4f99543024f9 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1721124894 "/Users/igorlimarochaazevedo/Programming/Algorithms/algorithms-174/summary/main.tex" "main.pdf" "main" 1721124900 0
-  "/Users/igorlimarochaazevedo/Programming/Algorithms/algorithms-174/summary/main.tex" 1721124899 89814 f2c3f3b34bf6ba70daa4c4e64954511f ""
+["pdflatex"] 1721198722 "/Users/igorlimarochaazevedo/Programming/Algorithms/algorithms-174/summary/main.tex" "main.pdf" "main" 1721198729 0
+  "/Users/igorlimarochaazevedo/Programming/Algorithms/algorithms-174/summary/main.tex" 1721198715 89736 7116d450f7eabfcc68d9b8e6b4cbc534 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -249,11 +249,11 @@
   "figures/radix_sort.png" 1721092404 49952 42fb4b95c2c97feffd1a5ef3461f1f37 ""
   "figures/recursive_tree.png" 1721092404 79507 4af75e6d11c57b57b3bd224694a60db1 ""
   "figures/recursive_tree_example.png" 1721092404 103638 e065673a2da6fe17d72fb53c519bacfd ""
-  "main.aux" 1721124900 20986 a4387ede6e7563ecd5e6416a146b1010 "pdflatex"
-  "main.bbl" 1721124894 788 b2497d02bfc58ef1fc4ff030f25ad1c8 "bibtex main"
-  "main.out" 1721124900 10112 988118bb37f5f946738d11cac5c3fa09 "pdflatex"
-  "main.tex" 1721124899 89814 f2c3f3b34bf6ba70daa4c4e64954511f ""
-  "main.toc" 1721124900 5588 06ec272826d054a1163d152ac7ddff0b "pdflatex"
+  "main.aux" 1721198728 21103 59e3710ea44bc3bb5b6d4f99543024f9 "pdflatex"
+  "main.bbl" 1721198722 788 b2497d02bfc58ef1fc4ff030f25ad1c8 "bibtex main"
+  "main.out" 1721198728 10215 e1242c79c4f401827dcde7302895e81b "pdflatex"
+  "main.tex" 1721198715 89736 7116d450f7eabfcc68d9b8e6b4cbc534 ""
+  "main.toc" 1721198728 5658 3ec9f76e0f45686f5e438d971057f455 "pdflatex"
   (generated)
   "main.aux"
   "main.log"
