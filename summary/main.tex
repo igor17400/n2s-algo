@@ -65,11 +65,12 @@
 \renewcommand{\footrulewidth}{1pt}
 \footrulecolor{color4!100}%
 
-\fancyfoot[C]{A Not-Too-Short, Not-Quite-Long Summary of \textit{Algorithms}}
-\fancyfoot[R]{\thepage}
-
 \setlength{\headheight}{15mm}
 \pagestyle{fancy}
+\fancyhf{} % Clear all header and footer fields
+\fancyhead[L]{\leftmark} % Leftmark will include only the section title
+\fancyfoot[C]{A Not-Too-Short, Not-Quite-Long Summary of \textit{Algorithms}}
+\fancyfoot[R]{\thepage}
 
 \usepackage{times}
 \begin{document}
@@ -1823,6 +1824,63 @@ A binary search tree is a data structure where keys are stored in a manner that 
 
 \section{Dynamic Programming}
 
+\begin{quote}
+    \setlength{\leftskip}{0.25cm}
+    $\textcolor{color2}{\Longrightarrow}$ The following section uses the book \cite{10.5555/1614191} as a reference.
+\end{quote}
+
+A dynamic-programming algorithm solves each subproblem \hlt{just once} and then saves its answer in a table, thereby avoiding the work of recomputing the answer every time it solves each subproblem. Dynamic programming applies when the subproblems overlap, that is, when subproblems share subsubproblems. In this context, a \textbf{divide-and-conquer} algorithm does \hlt{more work than necessary}, repeatedly solving the common subproblems. When developing a dynamic-programming algorithm, we follow a sequence of four steps:
+
+\begin{enumerate}[itemsep=1pt, topsep=5pt]
+    \item Characterize the structure of an optimal solution
+    \item Recursively define the value of an optimal solution
+    \item Compute the value of an optimal solution, typically in a bottom-up fashion
+    \item Construct an optimal solution from computed information
+\end{enumerate}
+
+\begin{quote}
+    \setlength{\leftskip}{0.25cm}
+    $\textcolor{color2}{\Longrightarrow}$ Solving the problem initially using divide and conquer is not a bad idea, considering that we \hlt{optimize} the code logic afterwards.
+\end{quote}
+
+
+\subsection{0/1 Knapsack}
+
+\noindent \underline{\textit{Example}}: Imagine we are going to the supermarket, and we want to buy a selection of products to take with us to the park. We have only one backpack with a certain capacity, and we want to \hlt{maximize} the total value of the products we can fit into our backpack. The condition here is that we can only choose one product of each type.\\
+
+\noindent We enter a supermarket with a backpack that has a capacity of \( W = 50 \) units. There are \( n = 3 \) products available:
+\begin{itemize}[itemsep=1pt, topsep=5pt]
+    \item Product 1: cost \( c_1 = 60 \), weight \( w_1 = 10 \)
+    \item Product 2: cost \( c_2 = 100 \), weight \( w_2 = 20 \)
+    \item Product 3: cost \( c_3 = 120 \), weight \( w_3 = 30 \)
+\end{itemize}
+
+The goal is to determine the maximum value of the backpack when products are not allowed to be fractioned. In this example, we should take Product 2 and Product 3 to maximize the total value. Thus, the total value would be 220. The algorithm for such an approach can be seen in pseudocode \ref{algo:knapsack}. However this algorihtm has a time complexity of $O(2^n)$. We can improve this by using a technique called \hlt{memoization}. 
+
+\begin{algorithm}
+    \caption{0/1 Knapsack}
+    \begin{algorithmic}[1]
+        \Function{knapsack\_helper}{$level, capacity, weights, values$}
+            \If{$level = $ len(values)}
+                \State \Return 0
+            \EndIf
+            \If{$weights[level] > capacity$}
+                \State \Return \Call{knapsack\_helper}{$level + 1, capacity, weights, values$}
+            \EndIf
+            \State $profit\_with \gets values[level] + $ \Call{knapsack\_helper}{$level + 1, capacity - weights[level], weights, values$}
+            \State $profit\_without \gets $ \Call{knapsack\_helper}{$level + 1, capacity, weights, values$}
+            \State \Return max($profit\_with$, $profit\_without$)
+        \EndFunction\\
+        
+        \Function{knapsack\_naive}{$capacity, weights, values$} \Comment{\hlti{$O(2^n)$}}
+            \State \Return \Call{knapsack\_helper}{$0, capacity, weights, values$}
+        \EndFunction
+    \end{algorithmic}
+    \label{algo:knapsack}
+\end{algorithm}
+
+
+\newpage
 \fontsize{8}{9}\selectfont
 \bibliography{ResearchPaperBib}
 

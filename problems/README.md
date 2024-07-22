@@ -350,8 +350,24 @@ Compute the minimum number of coins needed to change the given value into coins 
 
 **Output**: The minimum number of coins with denominations 1, 5, and 10 that changes money.
 
+## 18 - Maximum Value of the Loot (UCSD Coursera)
+
+### *Problem Statement*:
+
+Find the maximal value of items that fit into the backpack.
+
+**Input:** 
+- The capacity of a backpack \( W \) 
+- The weights \((w_1, \ldots, w_n)\) 
+- The costs \((c_1, \ldots, c_n)\) of \( n \) different compounds.
+
+**Output:**
+- The maximum total value of fractions of items that fit into the backpack of the given capacity. 
+- The goal is to maximize the value of \( c_1 \cdot f_1 + \cdots + c_n \cdot f_n \) such that \( w_1 \cdot f_1 + \cdots + w_n \cdot f_n \leq W \) and \( 0 \leq f_i \leq 1 \) for all \( i \). Here, \( f_i \) is the fraction of the \( i \)-th item taken into the backpack.
+
+
 ### *Path*:
-`problems/practice_exercises/17_money_change.py`
+`problems/practice_exercises/18_max_backpack.py`
 
 ## 19 -  Minimum Coin Change Problem
 
