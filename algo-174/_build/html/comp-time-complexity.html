@@ -1,0 +1,841 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Computing Time Complexity &#8212; A Not-Too-Short, Not-Quite-Long Summary of Algorithms</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'comp-time-complexity';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Computing Time Complexity (Continue)" href="comp-time-complexity-cont.html" />
+    <link rel="prev" title="Mathematical Induction" href="math-induction.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="A Not-Too-Short, Not-Quite-Long Summary of Algorithms - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="A Not-Too-Short, Not-Quite-Long Summary of Algorithms - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    A Not-Too-Short, Not-Quite-Long Summary of Algorithms
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction to Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interface-data-structures.html">Interfaces &amp; Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="math-induction.html">Mathematical Induction</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Computing Time Complexity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="comp-time-complexity-cont.html">Computing Time Complexity (Continue)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sorting.html">Sorting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcomp-time-complexity.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/comp-time-complexity.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Computing Time Complexity</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#divide-and-conquer">Divide-and-Conquer</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recurrences">Recurrences</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-maximum-subarray-problem">The maximum-subarray problem</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-brute-force-solution">A brute-force solution</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-solution-using-divide-and-conquer">A solution using divide-and-conquer</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analyzing-the-algorithm">Analyzing The Algorithm</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-the-height-of-a-binary-tree-is-log-n">Why the height of a binary tree is <span class="math notranslate nohighlight">\(\log n\)</span>?</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="computing-time-complexity">
+<h1>Computing Time Complexity<a class="headerlink" href="#computing-time-complexity" title="Link to this heading">#</a></h1>
+<p>Computing the time complexity of algorithms can be challenging. Understanding and analyzing the time complexity is crucial for evaluating the efficiency of algorithms. Several methods are available to compute and solve recurrences, which help in determining the time complexity of recursive algorithms. In this section, we will briefly explain some commonly used methods and give some examples to sharpen our intuition.</p>
+<p>Let’s focus on some examples and rules that can help determine the running time of an algorithm.</p>
+<p><u><i>Examples:</i></u></p>
+<ul class="simple">
+<li><p><strong>Loops</strong>: The total running time is the product of the running time of the statements inside the loop and the number of iterations. In general, this results in <span class="math notranslate nohighlight">\(O(n)\)</span>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">simple_loop</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;•&quot;</span><span class="p">)</span>  <span class="c1"># This statement runs n times</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Nested Loops</strong>: The total running time is the product of the sizes of all the loops. For two nested loops, <span class="math notranslate nohighlight">\(T(n) = c \cdot n \cdot n = cn^2 = O(n^2)\)</span>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">nested_loops</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;•&quot;</span><span class="p">)</span>  <span class="c1"># This statement runs n * n times</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Consecutive Statements</strong>: Add the time complexity of each statement. Look at the pseudocode in Algorithm, we have <span class="math notranslate nohighlight">\(T(n) = c + cn + cn^2 = O(n^2)\)</span>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">consecutive_statements_example</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="c1"># Step 1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;•&quot;</span><span class="p">)</span>  <span class="c1"># Time Complexity: c</span>
+    <span class="c1"># Step 2</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;•&quot;</span><span class="p">)</span>  <span class="c1"># Time Complexity: cn</span>
+        <span class="c1"># Step 3</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;•&quot;</span><span class="p">)</span>  <span class="c1"># Time Complexity: cn^2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>If-Then-Else</strong>: The total running time will be based on the test plus the larger of either part of the if/else. Look at Algorithm. We can see that <span class="math notranslate nohighlight">\(T(n) = c + cn = O(n)\)</span>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">if_then_else_example</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="c1"># Step 1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;•&quot;</span><span class="p">)</span>  <span class="c1"># Time Complexity: c</span>
+
+    <span class="c1"># Step 2</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;•&quot;</span><span class="p">)</span>  <span class="c1"># Time Complexity: c</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Step 3</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;•&quot;</span><span class="p">)</span>  <span class="c1"># Time Complexity: cn</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><u><i>Tricky Example:</i></u></p>
+<p>Sometimes, <span style="background-color: #F9F9E0;">loops</span>  do not result in <span class="math notranslate nohighlight">\(O(n)\)</span> but rather <span class="math notranslate nohighlight">\(O(\log n)\)</span>. Consider the example shown below. In this example, the for loop runs <span class="math notranslate nohighlight">\(i\)</span> times, but at each iteration, we multiply the value of <span class="math notranslate nohighlight">\(i\)</span> by 2. To understand the total running time, consider the following steps:</p>
+<ul class="simple">
+<li><p>Iteration 1: <span class="math notranslate nohighlight">\(i = 1 \rightarrow 2^0\)</span></p></li>
+<li><p>Iteration 2: <span class="math notranslate nohighlight">\(i = 2 \rightarrow 2^1\)</span></p></li>
+<li><p>Iteration 3: <span class="math notranslate nohighlight">\(i = 3 \rightarrow 2^2\)</span></p></li>
+<li><p>Iteration 4: <span class="math notranslate nohighlight">\(i = 4 \rightarrow 2^3\)</span></p></li>
+<li><p>And so on, up to iteration k: <span class="math notranslate nohighlight">\(i = n \rightarrow 2^{k-1}\)</span></p></li>
+</ul>
+<p>Then, we can obtain a relation between <span class="math notranslate nohighlight">\(k\)</span> and <span class="math notranslate nohighlight">\(n\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[n = 2^{k-1} \implies \log(n) = k - 1 \implies k = \log(n) + 1\]</div>
+<p>Thus, we have <span class="math notranslate nohighlight">\(O(\log n)\)</span> as the time complexity since <span class="math notranslate nohighlight">\(i\)</span> is not growing linearly, but exponentially.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">tricky_for_loop</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;•&quot;</span><span class="p">)</span>  <span class="c1"># Comment: O(log i)</span>
+        <span class="n">i</span> <span class="o">*=</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<style>
+table tr:hover {
+    background-color: #FFC0D9 !important;
+}
+</style>
+<section id="divide-and-conquer">
+<h2>Divide-and-Conquer<a class="headerlink" href="#divide-and-conquer" title="Link to this heading">#</a></h2>
+<p>Before diving into each method for solving the time complexity problem, let’s first understand a strategy called “<span style="background-color: #F9F9E0;">divide-and-conquer</span>,” which is very common in algorithms.</p>
+<p><em>Divide-and-conquer</em> is a technique where a problem is divided into smaller subproblems that are similar to the original problem but smaller in size. These subproblems are solved <span style="background-color: #F9F9E0;">independently</span>, and their solutions are combined to solve the original problem. This approach is particularly effective for problems that can be naturally divided into independent subproblems, leading to efficient recursive algorithms. Examples of divide-and-conquer algorithms include Merge Sort and Quick Sort, which use this technique to achieve optimal time complexities.</p>
+<section id="recurrences">
+<h3>Recurrences<a class="headerlink" href="#recurrences" title="Link to this heading">#</a></h3>
+<p>A <span style="background-color: #F9F9E0;">recurrence</span> is an equation or inequality that describes a function in terms of its value on smaller inputs.</p>
+</section>
+<section id="the-maximum-subarray-problem">
+<h3>The maximum-subarray problem<a class="headerlink" href="#the-maximum-subarray-problem" title="Link to this heading">#</a></h3>
+<p>Our goal is to find the subarray which has the largest sum, with the constraint that the subarray must consist of adjacent elements from the original array.</p>
+<section id="a-brute-force-solution">
+<h4>A brute-force solution<a class="headerlink" href="#a-brute-force-solution" title="Link to this heading">#</a></h4>
+<p>For this <span style="background-color: #F9F9E0;">brute force</span> solution let’s consider a window size of 2. An array of <span class="math notranslate nohighlight">\(n\)</span> items has <span class="math notranslate nohighlight">\(\binom{n}{2}\)</span> such pairs of subarrays. Since <span class="math notranslate nohighlight">\(\binom{n}{2}\)</span> is <span class="math notranslate nohighlight">\(\Theta(n^2)\)</span>, and the best we can hope for is to evaluate each pair in constant time, this approach would take <span class="math notranslate nohighlight">\(\Omega(n^2)\)</span> time.</p>
+</section>
+</section>
+<section id="a-solution-using-divide-and-conquer">
+<h3>A solution using divide-and-conquer<a class="headerlink" href="#a-solution-using-divide-and-conquer" title="Link to this heading">#</a></h3>
+<p>Let’s consider the scenario described in the CLRS book. The goal is to determine which subarray maximizes our profit given that we buy stocks when they are cheap and sell them when the price is higher than the purchase cost. We have an array representing the price fluctuations within a given time range and another array representing the price difference (change) every two consecutive days, as shown below</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Day</p></th>
+<th class="head"><p>0</p></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(\cdots\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Price</p></td>
+<td><p>100</p></td>
+<td><p>113</p></td>
+<td><p>110</p></td>
+<td><p>85</p></td>
+<td><p><span class="math notranslate nohighlight">\(\cdots\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Change</p></td>
+<td><p>-</p></td>
+<td><p>13</p></td>
+<td><p>-3</p></td>
+<td><p>-25</p></td>
+<td><p><span class="math notranslate nohighlight">\(\cdots\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_maximum_crossing_subarray</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">high</span><span class="p">):</span>
+    <span class="n">left_sum</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;-inf&#39;</span><span class="p">)</span>
+    <span class="n">_sum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">max_left</span> <span class="o">=</span> <span class="n">mid</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">mid</span><span class="p">,</span> <span class="n">low</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">_sum</span> <span class="o">+=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">_sum</span> <span class="o">&gt;</span> <span class="n">left_sum</span><span class="p">:</span>
+            <span class="n">left_sum</span> <span class="o">=</span> <span class="n">_sum</span>
+            <span class="n">max_left</span> <span class="o">=</span> <span class="n">i</span>
+
+    <span class="n">right_sum</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;-inf&#39;</span><span class="p">)</span>
+    <span class="n">_sum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">max_right</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">high</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">_sum</span> <span class="o">+=</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">_sum</span> <span class="o">&gt;</span> <span class="n">right_sum</span><span class="p">:</span>
+            <span class="n">right_sum</span> <span class="o">=</span> <span class="n">_sum</span>
+            <span class="n">max_right</span> <span class="o">=</span> <span class="n">j</span>
+    
+    <span class="k">return</span> <span class="p">(</span><span class="n">max_left</span><span class="p">,</span> <span class="n">max_right</span><span class="p">,</span> <span class="n">left_sum</span> <span class="o">+</span> <span class="n">right_sum</span><span class="p">)</span>
+
+<span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">max_left</span><span class="p">,</span> <span class="n">max_right</span><span class="p">,</span> <span class="n">lr_sum</span> <span class="o">=</span> <span class="n">find_maximum_crossing_subarray</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;max_left = &quot;</span><span class="p">,</span> <span class="n">max_left</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;max_right = &quot;</span><span class="p">,</span> <span class="n">max_right</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;left_sum + right_sum = &quot;</span><span class="p">,</span> <span class="n">lr_sum</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>max_left =  3
+max_right =  8
+left_sum + right_sum =  21
+</pre></div>
+</div>
+</div>
+</div>
+<p><img alt="Find Maximum Crossing Subarray Schematic" src="_images/fmcs.png" /></p>
+<p><em>Figure: Find Maximum Crossing Subarray Schematic</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_maximum_subarray</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">):</span>
+    <span class="c1"># Base case</span>
+    <span class="k">if</span> <span class="n">high</span> <span class="o">==</span> <span class="n">low</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">A</span><span class="p">[</span><span class="n">low</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">low</span> <span class="o">+</span> <span class="n">high</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">left_low</span><span class="p">,</span> <span class="n">left_high</span><span class="p">,</span> <span class="n">left_sum</span> <span class="o">=</span> <span class="n">find_maximum_subarray</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">mid</span><span class="p">)</span>
+        <span class="n">right_low</span><span class="p">,</span> <span class="n">right_high</span><span class="p">,</span> <span class="n">right_sum</span> <span class="o">=</span> <span class="n">find_maximum_subarray</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">high</span><span class="p">)</span>
+        <span class="n">cross_low</span><span class="p">,</span> <span class="n">cross_high</span><span class="p">,</span> <span class="n">cross_sum</span> <span class="o">=</span> <span class="n">find_maximum_crossing_subarray</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">high</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">left_sum</span> <span class="o">&gt;=</span> <span class="n">right_sum</span> <span class="ow">and</span> <span class="n">left_sum</span> <span class="o">&gt;=</span> <span class="n">cross_sum</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">left_low</span><span class="p">,</span> <span class="n">left_high</span><span class="p">,</span> <span class="n">left_sum</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">right_sum</span> <span class="o">&gt;=</span> <span class="n">left_sum</span> <span class="ow">and</span> <span class="n">right_sum</span> <span class="o">&gt;=</span> <span class="n">cross_sum</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">right_low</span><span class="p">,</span> <span class="n">right_high</span><span class="p">,</span> <span class="n">right_sum</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">cross_low</span><span class="p">,</span> <span class="n">cross_high</span><span class="p">,</span> <span class="n">cross_sum</span><span class="p">)</span>
+
+<span class="c1"># Example usage</span>
+<span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">low</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">high</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">find_maximum_subarray</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Max left index:&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Max right index:&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Max sum:&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Max left index: 3
+Max right index: 8
+Max sum: 21
+</pre></div>
+</div>
+</div>
+</div>
+<p><img alt="Find Maximum Subarray Tree Schematic" src="_images/fms_tree.png" /></p>
+<p><em>Figure:Find Maximum Subarray Tree Schematic</em></p>
+<p>The codes shown above in <code class="docutils literal notranslate"><span class="pre">find_maximum_subarray</span></code> and <code class="docutils literal notranslate"><span class="pre">find_maximum_crossing_subarray</span></code> complement each other. The <code class="docutils literal notranslate"><span class="pre">find_maximum_subarray</span></code> function focuses on the divide and conquer strategy, splitting the problem into smaller parts and solving them. The <code class="docutils literal notranslate"><span class="pre">find_maximum_crossing_subarray</span></code> function, on the other hand, is responsible for calculating the maximum subarray that crosses the midpoint (mid). To analyze the algorithm’s complexity, we will use a method known as the recursion tree method. For a visualization on how the algorithm works please refer to the figures above. In addition, refer to the following animation with a step by step illustration:</p>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQTWvuA0QGKHN6C1A_1XwKx7nwbTjKsVXQomFZycw8Fv87NvVLID4332b-2kXRFf1JM_JOGaMecKn5x/embed?start=false&loop=false&delayms=3000" frameborder="0" width="760" height="456" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe></section>
+</section>
+<section id="analyzing-the-algorithm">
+<h2>Analyzing The Algorithm<a class="headerlink" href="#analyzing-the-algorithm" title="Link to this heading">#</a></h2>
+<p>To perform our analysis, let’s assume that the original problem size is a power of 2. Denote <span class="math notranslate nohighlight">\(T(n)\)</span> as the running time for <code class="docutils literal notranslate"><span class="pre">find_maximum_subarray</span></code> on a subarray of <span class="math notranslate nohighlight">\(n\)</span> elements.</p>
+<p>For the base case, when <span class="math notranslate nohighlight">\(n = 1\)</span>, we have <span class="math notranslate nohighlight">\(T(n) = \Theta(1)\)</span> (constant time). The recursive case occurs when <span class="math notranslate nohighlight">\(n &gt; 1\)</span>. Each subproblem is solved on a subarray of <span class="math notranslate nohighlight">\(n/2\)</span> elements (our assumption that the original problem size is a power of 2 ensures that <span class="math notranslate nohighlight">\(n/2\)</span> is an integer), so we spend <span class="math notranslate nohighlight">\(T(n/2)\)</span> time solving each subproblem. Since we solve two subproblems, for the <em>left</em> and <em>right</em> subarrays, the time spent will be <span class="math notranslate nohighlight">\(2T(n/2)\)</span>.</p>
+<p>Next, we need to analyze the time for the <code class="docutils literal notranslate"><span class="pre">find_maximum_crossing_subarray</span></code> function. If the subarray <span class="math notranslate nohighlight">\(A[\text{low} \cdots \text{high}]\)</span> contains <span class="math notranslate nohighlight">\(n\)</span> entries (so that <span class="math notranslate nohighlight">\(n = \text{high} - \text{low} + 1\)</span>), we claim that <code class="docutils literal notranslate"><span class="pre">find_maximum_crossing_subarray(A,</span> <span class="pre">low,</span> <span class="pre">mid,</span> <span class="pre">high)</span></code> takes <span class="math notranslate nohighlight">\(\Theta(n)\)</span> time.</p>
+<p>Since each iteration of the two for loops takes <span class="math notranslate nohighlight">\(\Theta(1)\)</span> time, we just need to count how many iterations there are altogether. The first for loop makes <span class="math notranslate nohighlight">\(\text{mid} - \text{low} + 1\)</span> iterations, and the second makes <span class="math notranslate nohighlight">\(\text{high} - \text{mid}\)</span> iterations. Thus, the total number of iterations is:</p>
+<div class="math notranslate nohighlight">
+\[
+(\text{mid} - \text{low} + 1) + (\text{high} - \text{mid}) = \text{high} - \text{low} + 1 = n
+\]</div>
+<p>Hence, <code class="docutils literal notranslate"><span class="pre">find_maximum_crossing_subarray</span></code> takes linear time, <span class="math notranslate nohighlight">\(\Theta(n)\)</span>.</p>
+<p>Returning to our <code class="docutils literal notranslate"><span class="pre">find_maximum_subarray</span></code> method, the only remaining analysis concerns the if and else conditions, which all take constant time, <span class="math notranslate nohighlight">\(\Theta(1)\)</span>. For the recursive case, we have:</p>
+<div class="math notranslate nohighlight">
+\[
+T(n) = \Theta(1) [\text{base case}] + 2T(n/2) [\text{solving subproblems}] + \Theta(n) [\text{fmcs}] + \Theta(1) [\text{if-else}]
+\]</div>
+<p>Where fmcs is <code class="docutils literal notranslate"><span class="pre">find_maximum_crossing_subarray</span></code> and <span class="math notranslate nohighlight">\([\cdot]\)</span> is the comment from where this function is being considered either <code class="docutils literal notranslate"><span class="pre">find_maximum_crossing_subarray</span></code> or <code class="docutils literal notranslate"><span class="pre">if-else</span></code>. Thus,</p>
+<div class="math notranslate nohighlight">
+\[
+T(n) = 2T(n/2) + \Theta(n)
+\]</div>
+<p>We can express our running time <span class="math notranslate nohighlight">\(T(n)\)</span> for <em>find_maximum_subarray</em> as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+T(n) =
+\begin{cases}
+  \Theta(1), &amp; \text{if } n = 1 \\
+  2T(n/2) + \Theta(n), &amp; \text{if } n &gt; 1
+\end{cases}
+\end{split}\]</div>
+<p>We will explore this in more detail in the next section, but a binary tree resulting from <span class="math notranslate nohighlight">\(2T(n/2)\)</span> has <span class="math notranslate nohighlight">\(\log n + 1\)</span> levels, and each level costs <span class="math notranslate nohighlight">\(cn\)</span> due to <span class="math notranslate nohighlight">\(\Theta(n)\)</span>. Therefore,</p>
+<div class="math notranslate nohighlight">
+\[
+T(n) = cn(\log n + 1) \implies T(n) = cn\log n + cn
+\]</div>
+<p>Which then becomes,</p>
+<div class="math notranslate nohighlight">
+\[
+T(n) = \Theta(n\log n)
+\]</div>
+<section id="why-the-height-of-a-binary-tree-is-log-n">
+<h3>Why the height of a binary tree is <span class="math notranslate nohighlight">\(\log n\)</span>?<a class="headerlink" href="#why-the-height-of-a-binary-tree-is-log-n" title="Link to this heading">#</a></h3>
+<p>The height of the recursion tree is <span class="math notranslate nohighlight">\(\log n\)</span> because at each level of the recursion, the problem size is halved. That is, imagine our original problem size is a power of 2. Then</p>
+<ol class="arabic simple">
+<li><p><strong>Initial Problem Size</strong>: Let’s start with a problem size of <span class="math notranslate nohighlight">\(n\)</span>.</p></li>
+<li><p><strong>First Level</strong>: At the first level of recursion, the problem is divided into two subproblems, each of size <span class="math notranslate nohighlight">\(n/2\)</span>.</p></li>
+<li><p><strong>Second Level</strong>: Each of these subproblems is further divided into two subproblems, each of size <span class="math notranslate nohighlight">\(n/4\)</span>.</p></li>
+<li><p><strong>Subsequent Levels</strong>: This process continues, halving the problem size at each level.</p></li>
+<li><p><strong>Base Case</strong>: The recursion continues until the problem size is reduced to 1.</p></li>
+</ol>
+<p>The number of levels in this recursion tree is the number of times we can divide <span class="math notranslate nohighlight">\(n\)</span> by 2 until we reach 1. This can be expressed as <span class="math notranslate nohighlight">\(\log_2 n\)</span>. Formally, if we start with a problem of size <span class="math notranslate nohighlight">\(n\)</span> and divide it into halves, the height <span class="math notranslate nohighlight">\(h\)</span> of the recursion tree is given by:</p>
+<div class="math notranslate nohighlight">
+\[
+2^{h} = n \implies h = \log_2 n
+\]</div>
+<p>So, the height of the tree is <span class="math notranslate nohighlight">\(\log n\)</span>. The height of the tree is the level of the node(s) with the longest path to the root. To get a grasp of what is going on, please refer to the figure shown below:</p>
+<p><img alt="Recursive Tree" src="_images/recursive_tree.png" /></p>
+<p><em>Figure:Height and levels of a binary tree</em></p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> The <span style="background-color: #F9F9E0;"><strong>level</strong></span> of a node is its distance (each edge counts as 1) to the root node. So the root node has level 0, its direct children have level 1 etc - <a class="reference external" href="https://qr.ae/psjnbi">link</a>. For binary trees, the number of levels is given by <span class="math notranslate nohighlight">\(\log n + 1\)</span>.</p>
+</div></blockquote>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> The <span style="background-color: #F9F9E0;"><strong>height</strong></span> of the tree is the level of the node(s) with the longest path to the root. Stated differently, the height is the maximum of all levels - <a class="reference external" href="https://qr.ae/psjnbi">link</a>. For binary trees, the height is given by <span class="math notranslate nohighlight">\(\log n\)</span>.</p>
+</div></blockquote>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="math-induction.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Mathematical Induction</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="comp-time-complexity-cont.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Computing Time Complexity (Continue)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#divide-and-conquer">Divide-and-Conquer</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recurrences">Recurrences</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-maximum-subarray-problem">The maximum-subarray problem</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#a-brute-force-solution">A brute-force solution</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-solution-using-divide-and-conquer">A solution using divide-and-conquer</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analyzing-the-algorithm">Analyzing The Algorithm</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-the-height-of-a-binary-tree-is-log-n">Why the height of a binary tree is <span class="math notranslate nohighlight">\(\log n\)</span>?</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Igor L.R. Azevedo
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

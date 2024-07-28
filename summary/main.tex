@@ -14,6 +14,7 @@
 \usepackage [autostyle, english=american]{csquotes}
 \MakeOuterQuote{"}
 \usepackage{tikz}
+\usetikzlibrary{matrix}
 \usepackage{amsmath}
 \usepackage{bm}
 \usepackage{geometry} % for adjusting page dimensions
@@ -1855,7 +1856,7 @@ A dynamic-programming algorithm solves each subproblem \hlt{just once} and then 
     \item Product 3: cost \( c_3 = 120 \), weight \( w_3 = 30 \)
 \end{itemize}
 
-The goal is to determine the maximum value of the backpack when products are not allowed to be fractioned. In this example, we should take Product 2 and Product 3 to maximize the total value. Thus, the total value would be 220. The algorithm for such an approach can be seen in pseudocode \ref{algo:knapsack}. However this algorihtm has a time complexity of $O(2^n)$. We can improve this by using a technique called \hlt{memoization}. 
+The goal is to determine the maximum value of the backpack when products are not allowed to be fractioned. In this example, we should take Product 2 and Product 3 to maximize the total value. Thus, the total value would be 220. The algorithm for such an approach can be seen in pseudocode \ref{algo:knapsack}. However this algorihtm has a time complexity of \hlt{$O(2^n)$}. We can improve this by using a technique called \hlt{memoization}. 
 
 \begin{algorithm}
     \caption{0/1 Knapsack}
@@ -1863,12 +1864,16 @@ The goal is to determine the maximum value of the backpack when products are not
         \Function{knapsack\_helper}{$level, capacity, weights, values$}
             \If{$level = $ len(values)}
                 \State \Return 0
-            \EndIf
+            \EndIf\\
+            
+            \Comment{We're excluding the item, as including it would \hlt{exceed} the capacity of our backpack.}
             \If{$weights[level] > capacity$}
                 \State \Return \Call{knapsack\_helper}{$level + 1, capacity, weights, values$}
-            \EndIf
+            \EndIf\\
+
             \State $profit\_with \gets values[level] + $ \Call{knapsack\_helper}{$level + 1, capacity - weights[level], weights, values$}
-            \State $profit\_without \gets $ \Call{knapsack\_helper}{$level + 1, capacity, weights, values$}
+            \State $profit\_without \gets $ \Call{knapsack\_helper}{$level + 1, capacity, weights, values$}\\
+
             \State \Return max($profit\_with$, $profit\_without$)
         \EndFunction\\
         
@@ -1880,7 +1885,190 @@ The goal is to determine the maximum value of the backpack when products are not
 \end{algorithm}
 
 
+Before showing the optimized version of this algorithm, let's see one illustration to better understand the way this algorithm works. As shown in Figure \ref{fig:01knapsack}, this is a recursion tree for the following problem. To visualize the tree for the 0/1 knapsack problem, we'll show an example using the following data:
+
+\begin{itemize}
+    \item \textbf{Weights:} [1, 2, 3]
+    \item \textbf{Values:} [6, 10, 12]
+    \item \textbf{Capacity:} 5
+\end{itemize}
+
+We'll illustrate the recursive tree step-by-step for this example which can be visualized in figure \ref*{fig:01knapsack}:
+
+\begin{figure}[h!]
+  \centering
+  \begin{tikzpicture}[level distance=1.5cm,
+    level 1/.style={sibling distance=6cm},
+    level 2/.style={sibling distance=3cm},
+    level 3/.style={sibling distance=1.5cm},
+    edge from parent/.style={draw,thick},
+    every node/.style={circle,draw}]
+    
+    \node {$(0, 5)$}
+      child { node {$(1, 4)$}
+        child { node {$(2, 2)$}
+          child { node {$(3, -1)$} }
+          child { node {$(3, 2)$} }
+        }
+        child { node {$(2, 4)$}
+          child { node {$(3, 1)$} }
+          child { node {$(3, 4)$} }
+        }
+      }
+      child { node {$(1, 5)$}
+        child { node {$(2, 3)$}
+          child { node {$(3, 0)$} }
+          child { node {$(3, 3)$} }
+        }
+        child { node {$(2, 5)$}
+          child { node {$(3, 2)$} }
+          child { node {$(3, 5)$} }
+        }
+      };
+  \end{tikzpicture}
+  \caption{Illustration of the naive implementation of the 0/1 Knapsack algorithm. Each node represents a state with the current item index (level) and remaining capacity - \hlt{(level, capacity)}. The branches show the decision to \hlt{include} or \hlt{exclude} the current item. Each leaf represents the base case where the recursion ends, either because there are no items left to consider or the remaining capacity is zero or negative.}
+  \label{fig:01knapsack}
+\end{figure}
+
+
+\subsubsection{Memoization}
+
+Memoization is an optimization technique used to speed up algorithms by storing the results of expensive function calls and \hlt{reusing} them when the same inputs occur again. This avoids the need to recompute results for the same inputs, significantly improving the time complexity from exponential to polynomial in many cases. For the the 0/1 Knapsack problem, this can be optimized as shown in the pesudocode \ref{algo:knapsack_memo}. The following list summarized the changes made:
+
+\begin{itemize}
+    \item \textbf{Memoization Table:} A dictionary \texttt{memo} is introduced to store results of subproblems.
+    \item \textbf{Check Memo Table:} Before computing the result, the algorithm checks if the result for the current state \texttt{(level, capacity)} is already in the memo table. If so, it returns the stored result.
+    \item \textbf{Store Result in Memo Table:} After computing the result for a given state, it is stored in the memo table before returning.
+\end{itemize}
+
+\begin{quote}
+    \setlength{\leftskip}{0.25cm}
+    $\textcolor{color2}{\Longrightarrow}$ The time complexity with memoization is \(O(n \cdot W)\), where \(n\) is the number of items and \(W\) is the capacity of the knapsack. This is because each subproblem \texttt{(level, capacity)} is solved at most once, leading to a polynomial time complexity.
+\end{quote}
+
+
+\begin{algorithm}
+    \caption{0/1 Knapsack with Memoization}
+    \begin{algorithmic}[1]
+        \Function{knapsack\_helper}{$level, capacity, weights, values, memo$}
+            \If{$level = $ len(values)}
+                \State \Return 0
+            \EndIf\\
+            
+            \If{$(level, capacity)$ in memo} \Comment{Return the value from our \hlt{memo table}}
+                \State \Return memo[$(level, capacity)$]
+            \EndIf\\
+
+            \Comment{We're excluding the item, as including it would \hlt{exceed} the capacity of our backpack.}
+            \If{$weights[level] > capacity$}
+                \State memo[$(level, capacity)$] $\gets$ \Call{knapsack\_helper}{$level + 1, capacity, weights, values, memo$}
+                \State \Return memo[$(level, capacity)$]
+            \EndIf\\
+
+            \State $profit\_with \gets values[level] + $ \Call{knapsack\_helper}{$level + 1, capacity - weights[level], weights, values$}
+            \State $profit\_without \gets $ \Call{knapsack\_helper}{$level + 1, capacity, weights, values$}\\
+
+            \State memo[$(level, capacity)$] $\gets$ \Call{max}{$profit\_with$, $profit\_without$}
+            \State \Return memo[$(level, capacity)$]
+        \EndFunction\\
+
+        \Function{memoization}{capacity, weights, values} \Comment{A 2D array with $n$ rows and $m + 1$ columns}
+        \State $N \gets $ len($values$)
+        \State $M \gets capacity$
+        \Comment{A 2D array with $N$ rows and $M + 1$ columns, initialized with -1's}
+        \State $memo \gets [ [-1] * (M + 1) \text{ for } i \text{ in range }(N) ]$
+        \State \Return memo
+        \EndFunction\\
+        
+        \Function{knapsack\_naive}{$capacity, weights, values$} \Comment{\hlti{$O(n \cdot W)$}}
+            \State $memo \gets \Call{memoization}{capacity, weights, values}$
+            \State \Return \Call{knapsack\_helper}{$0, capacity, weights, values, memo$}
+        \EndFunction
+    \end{algorithmic}
+    \label{algo:knapsack_memo}
+\end{algorithm}
+
+\subsection{A More "Robust" (Dynamic Programming) Approach to 0/1 Knapsack}
+
+\begin{quote}
+    \setlength{\leftskip}{0.25cm}
+    $\textcolor{color2}{\Longrightarrow}$ Both the dynamic programming approach and the recursive memoization approach have time complexity of \hlt{$O(n \cdot W)$}
+\end{quote}
+
+The pseudcode \ref*{algo:knapsack_dp} shows an approach which is more clever using an 2D array to compute our solution. This solution is usually referred to as the \hlt{true} dynamic programming approach to the 0/1 Knapsack problem offers several advantages over the naive recursive approach:
+
+\begin{itemize}
+    \item \textbf{Efficiency:} The naive recursive approach has an exponential time complexity \hlt{\(O(2^n)\)}, making it infeasible for large inputs. In contrast, the dynamic programming approach reduces the time complexity to \hlt{\(O(n \cdot W)\)}, where \(n\) is the number of items and \(W\) is the capacity of the knapsack.
+    \item \textbf{Avoids Redundant Calculations:} The dynamic programming approach stores intermediate results in a 2D table (memoization) to avoid recalculating the same subproblems multiple times. This significantly reduces the number of calculations required.
+    \item \textbf{Iterative Solution:} Unlike the recursive approach, the dynamic programming approach is iterative and does not involve the overhead of function calls, making it more efficient in terms of memory usage and execution speed.
+\end{itemize}
+
+The table \ref*{fig:knapsack_dp} illustrates the dynamic programming table for a knapsack problem with weights [1, 2, 3], values [6, 10, 12], and capacity 5. In this table:
+\begin{itemize}
+    \item The rows represent the items (including a row for no items).
+    \item The columns represent the knapsack capacities from 0 to the maximum capacity.
+    \item Each cell \(dp[i][w]\) contains the maximum profit achievable with the first \(i\) items and a knapsack capacity \(w\).
+\end{itemize}
+
+\begin{algorithm}
+    \caption{0/1 Knapsack using Dynamic Programming}
+    \begin{algorithmic}[1]
+        \Function{knapsack}{$values, weight, capacity$} \Comment{Time Complexity: \hlti{$O(n \cdot W)$} | Space Complexity: \hlti{$O(n \cdot W)$}}
+            \State $N \gets $ len($values$)
+            \State $M \gets capacity$
+            \Comment{A 2D array with $N$ rows and $M + 1$ columns, initialized with 0's}
+            \State $dp \gets [ [0] * (M + 1) \text{ for } i \text{ in range }(N) ]$
+            
+            \Comment{Fill the first column to reduce \hlt{edge cases}}
+            \For{$i \gets 0$ \textbf{to} $N - 1$}
+                \State $dp[i][0] \gets 0$
+            \EndFor
+            \Comment{Fill the first row based on the first item's weight and value}
+            \For{$c \gets 0$ \textbf{to} $M$}
+                \If{$weight[0] \leq c$}
+                    \State $dp[0][c] \gets values[0]$
+                \EndIf
+            \EndFor\\
+
+            \For{$i \gets 1$ \textbf{to} $N - 1$}
+                \For{$c \gets 1$ \textbf{to} $M$}
+                    \State $skip \gets dp[i-1][c]$
+                    \State $include \gets 0$
+                    \If{$c - weight[i] \geq 0$}
+                        \State $include \gets value[i] + dp[i-1][c - weight[i]]$
+                    \EndIf
+                    \State $dp[i][c] \gets \max(include, skip)$
+                \EndFor
+            \EndFor\\
+
+            \State \Return $dp[N-1][M]$
+        \EndFunction
+    \end{algorithmic}
+    \label{algo:knapsack_dp}
+\end{algorithm}
+
+
+\begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}
+      \matrix [matrix of math nodes, nodes in empty cells,
+      nodes={minimum width=1cm, minimum height=1cm, outer sep=0pt},
+      column sep=-\pgflinewidth, row sep=-\pgflinewidth,
+      row 1/.style={nodes={fill=black!20,minimum height=1cm}},
+      column 1/.style={nodes={fill=black!20,minimum width=1cm}}] (m) {
+        |[fill=black!20]| & 0 & 1 & 2 & 3 & 4 & 5 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        1 & 0 & 6 & 6 & 6 & 6 & 6 \\
+        2 & 0 & 6 & 10 & 16 & 16 & 16 \\
+        3 & 0 & 6 & 10 & 16 & 18 & 22 \\
+      };
+    \end{tikzpicture}
+    \caption{Dynamic programming table for the 0/1 Knapsack problem with weights [1, 2, 3], values [6, 10, 12], and capacity 5. Each cell \(dp[i][w]\) represents the maximum profit for the first \(i\) items with a capacity \(w\).}
+    \label{fig:knapsack_dp}
+  \end{figure}
+
 \newpage
+
 \fontsize{8}{9}\selectfont
 \bibliography{ResearchPaperBib}
 

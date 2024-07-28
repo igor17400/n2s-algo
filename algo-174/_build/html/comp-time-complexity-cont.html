@@ -1,0 +1,825 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Computing Time Complexity (Continue) &#8212; A Not-Too-Short, Not-Quite-Long Summary of Algorithms</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'comp-time-complexity-cont';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Sorting" href="sorting.html" />
+    <link rel="prev" title="Computing Time Complexity" href="comp-time-complexity.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="A Not-Too-Short, Not-Quite-Long Summary of Algorithms - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="A Not-Too-Short, Not-Quite-Long Summary of Algorithms - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    A Not-Too-Short, Not-Quite-Long Summary of Algorithms
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction to Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interface-data-structures.html">Interfaces &amp; Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="math-induction.html">Mathematical Induction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="comp-time-complexity.html">Computing Time Complexity</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Computing Time Complexity (Continue)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sorting.html">Sorting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcomp-time-complexity-cont.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/comp-time-complexity-cont.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Computing Time Complexity (Continue)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recursion-tree-method">Recursion Tree Method</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#substitution-method">Substitution Method</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reasoning-process">Reasoning Process</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#master-method">Master Method</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="computing-time-complexity-continue">
+<h1>Computing Time Complexity (Continue)<a class="headerlink" href="#computing-time-complexity-continue" title="Link to this heading">#</a></h1>
+<section id="recursion-tree-method">
+<h2>Recursion Tree Method<a class="headerlink" href="#recursion-tree-method" title="Link to this heading">#</a></h2>
+<p>Before, we used the idea of a tree to determine the time complexity of an algorithm. Now, we will explore this method in more detail. The recursion tree method visualizes the recurrence as a <em>tree</em>, where each node represents a <em>subproblem</em>. <strong>By summing the costs of all nodes at each level</strong> of the tree, this method helps us understand the overall time complexity. It is especially useful for recurrences where the work done at each level forms a clear pattern, allowing for easy summation.</p>
+<p><strong>Example:</strong> <span class="math notranslate nohighlight">\(T(n) = 3T(\lfloor n/4 \rfloor) + \Theta(n^2)\)</span></p>
+<p>Let’s assume, as before, that the original problem size is a power of 2, so <span class="math notranslate nohighlight">\( n/4 \)</span> yields an integer. By looking at the schematic in figure \ref{}, we can see that at each level, we have three components, each dividing by 4 as indicated by <span class="math notranslate nohighlight">\( 3T(n/4) \)</span>. At each level, we have a time complexity of <span class="math notranslate nohighlight">\( \Theta(n^2) \)</span>. Note how the subproblem size decreases by a factor of 4 each time we go down one level. We eventually must reach a base condition.</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> How far from the root do we reach one?</p>
+</div></blockquote>
+<p>We see that the subproblem for a node at depth <span class="math notranslate nohighlight">\( i \)</span> is <span class="math notranslate nohighlight">\( \frac{n}{4^i} \)</span>. Thus, the subproblem size hits 1 when</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{n}{4^i} = 1 \implies n = 4^i \implies \log_{4}{n} = i
+\]</div>
+<p>Thus, we see that the <strong>height</strong> of this tree is <strong><span class="math notranslate nohighlight">\(\log_{4}{n}\)</span></strong> and its number of <strong>levels</strong> is given by <strong><span class="math notranslate nohighlight">\(\log_{4}{n} + 1\)</span></strong> (i.e., <span class="math notranslate nohighlight">\(0, 1, 2, \cdots, \log_{4}{n} \rightarrow \text{depth } i\)</span>). Note that the results obtained here are different from those of a binary tree.</p>
+<p>Next, we determine the cost at each level of the tree. Each level has three times more nodes than the level above, so the number of nodes at depth <span class="math notranslate nohighlight">\(i\)</span> is <span class="math notranslate nohighlight">\(3^i\)</span>. Because the subproblem size reduces by a factor of 4 for each level we go down from the root, each <strong>node</strong> at depth <span class="math notranslate nohighlight">\(i\)</span> (<span class="math notranslate nohighlight">\(i = 0, 1, 2, \cdots, \log_{4}{n-1}\)</span>) has a <strong>cost</strong> of</p>
+<div class="math notranslate nohighlight">
+\[
+\text{cost per note at } i \text{th level} = \Theta(n^2) = cn^2 = c\Big(\frac{n}{4^i}\Big)^2
+\]</div>
+<p>Next, we need to find the cost at <strong>each level</strong> considering all the nodes at each level. If we have <span class="math notranslate nohighlight">\(3^i\)</span> nodes at each level and each costs <span class="math notranslate nohighlight">\( \Big( \frac{n}{4^i} \Big)^2 \)</span>, then</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Cost at each level} = 3^i \cdot  c\Big(\frac{n}{4^i}\Big)^2 = \Big( \frac{3}{16} \Big)^i cn^2
+\]</div>
+<p>What about the last level? The bottom level at depth <span class="math notranslate nohighlight">\(i = \log_{4}{n}\)</span> has</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Number of nodes at bottom level} = 3^i = 3^{\log_{4}{n}} = n^{\log_{4}{3}}
+\]</div>
+<p>Each node at the bottom level contributes <span class="math notranslate nohighlight">\(T(1)\)</span>. Since <span class="math notranslate nohighlight">\(T(1)\)</span> is a constant time, we have <span class="math notranslate nohighlight">\(\Theta(n^{\log_{4}{3}}) = T(1) \cdot n^{\log_{4}{3}}\)</span>.</p>
+<p>Let’s now combine all the costs:</p>
+<div class="math notranslate nohighlight">
+\[
+T(n) = cn^2 + \frac{3}{16}cn^2 + \Big( \frac{3}{16}\Big)^2 cn^2 + \cdots + \Big( \frac{3}{16}\Big)^{\log_{4}{n-1}} cn^2 + \Theta(n^{\log_{4}{3}})
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+T(n) = \sum^{\log_{4}{n-1}}_{i = 0}\Big( \frac{3}{16} \Big)^icn^2 + \Theta(n^{\log_{4}{3}})
+\]</div>
+<p>Where <span class="math notranslate nohighlight">\(\sum^{\log_{4}{n-1}}_{i = 0}\Big( \frac{3}{16} \Big)^icn^2\)</span> is the cost per <strong>level</strong> and <span class="math notranslate nohighlight">\(\Theta(n^{\log_{4}{3}})\)</span> is the cost of the <strong>bottom</strong> level.</p>
+<p>We can solve this equation from two perspectives. We know that</p>
+<div class="math notranslate nohighlight">
+\[
+\sum^n_{k = 0} x^k = \frac{x^{n+1} - 1}{x - 1}
+\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[
+\sum^{\infty}_{k=0} x^k = \frac{1}{1 - x}
+\]</div>
+<p>Using the equation above, we have</p>
+<div class="math notranslate nohighlight">
+\[
+T(n) = \frac{\left(\frac{3}{16}\right)^{\log_{4}{n}} - 1}{\left(\frac{3}{16}\right) - 1}cn^2 + \Theta(n^{\log_{4}{3}})
+\]</div>
+<p>which is quite a hard equation to solve. However, if we use the second equation, which requires us to assume that our sum extends to <span class="math notranslate nohighlight">\(\infty\)</span>, we have</p>
+<div class="math notranslate nohighlight">
+\[
+T(n) &lt; \sum^{\log_{4}{n-1}}_{i = 0}\left( \frac{3}{16} \right)^i cn^2 + \Theta(n^{\log_{4}{3}})
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+T(n) = \frac{1}{1 - \left(\frac{3}{16}\right)} cn^2 + \Theta(n^{\log_{4}{3}}) = \frac{16}{13}cn^2 + \Theta(n^{\log_{4}{3}})
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+T(n) = O(n^2)
+\]</div>
+<p>Finally, the time complexity is then given by <strong><span class="math notranslate nohighlight">\(T(n) = O(n^2)\)</span></strong>.</p>
+<p><strong>Example:</strong> <span class="math notranslate nohighlight">\(T(n) = T(n/3) + T(2n/3) + O(n)\)</span></p>
+<p>In order to find the height of the tree, let’s consider its <strong>longest path</strong>. At each level, we have <span class="math notranslate nohighlight">\(\left( \frac{2}{3} \right)^i n\)</span> subproblems when we look at the longest path. We’re interested in when this path is going to reach 1. Hence,</p>
+<div class="math notranslate nohighlight">
+\[
+\left( \frac{2}{3} \right)^i n = 1 \implies n = \left( \frac{2}{3} \right)^i \implies \log_{3/2}{n} = i
+\]</div>
+<p>Then we have that <span class="math notranslate nohighlight">\(i = \text{range}(0, \cdots, \log_{3/2}{n} - 1)\)</span>. Intuitively, we expect the solution to the recurrence to be at most the number of levels times the cost of each level. That is,</p>
+<div class="math notranslate nohighlight">
+\[
+O(cn \log_{3/2}{n}) = O(n \lg n)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\lg n = \log_{2} n\)</span>.</p>
+<p>It’s important to note that each level contributes to a cost of <span class="math notranslate nohighlight">\(cn\)</span> up to a certain point. For instance, when the shortest path reaches a subproblem size of 1, it stops contributing to the total cost in subsequent levels.</p>
+<p>If such a tree were to be a complete <strong>binary tree</strong> of height <span class="math notranslate nohighlight">\(\log_{3/2}{n}\)</span>, there would be <span class="math notranslate nohighlight">\(2^i\)</span> leaves where at most <span class="math notranslate nohighlight">\(2^{\log_{3/2}{n}} = n^{\log_{3/2}{2}}\)</span> leaves. Since the total cost of each leaf is constant, the total cost of all leaves could be <span class="math notranslate nohighlight">\(\Theta(n^{\log_{3/2}{2}})\)</span>. This recursion tree is not a complete binary tree; however, it has fewer than <span class="math notranslate nohighlight">\(n^{\log_{3/2}{2}}\)</span> leaves. To calculate the precise cost of the tree would take more effort. With that in mind, we can test our assumption of <span class="math notranslate nohighlight">\(O(n \lg n)\)</span> using the substitution method, which we shall introduce in the next session.</p>
+<p><img alt="Recursive tree for " src="_images/recursive_tree_example.png" /></p>
+</section>
+<section id="substitution-method">
+<h2>Substitution Method<a class="headerlink" href="#substitution-method" title="Link to this heading">#</a></h2>
+<p>The substitution method involves making an <strong>educated guess</strong> about the form of the solution and then using mathematical <strong>induction</strong> to prove that the guess is correct. This method works well for many types of recurrences and is particularly useful when the solution can be easily guessed or when the recurrence has a known solution. Let’s see some examples:</p>
+<p><strong>Example:</strong> <span class="math notranslate nohighlight">\(T(n) = T(n/3) + T(2n/3) + O(n)\)</span> - from divide and conquer section</p>
+<p>As we have seen before, this example is a bit hard to solve using only the tree method. With that in mind, let’s try to solve it using the substitution method. Let’s test our assumption that <span class="math notranslate nohighlight">\(T(n) = O(n \lg n)\)</span>. Then,</p>
+<div class="math notranslate nohighlight">
+\[
+T(n) = O(n \lg n) \leq d \cdot n \lg n
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+T(n) = T(n/3) + T(2n/3) + cn
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+T(n) \leq d \cdot \frac{n}{3}\lg(n/3) + d \cdot \frac{2n}{3} \lg(2n/3) + cn = \frac{dn}{3} \Big( \lg(n/3) \Big) + \frac{2dn}{3} \Big( \lg(2n/3) \Big) + cn
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+T(n) \leq \frac{dn}{3} \Big( \lg n - \lg 3 \Big) + \frac{2dn}{3} \Big( \lg n + \lg 2 - \lg 3 \Big) + cn
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+T(n) \leq \frac{dn}{3} \Big( \lg n - \lg 3 \Big) + \frac{2dn}{3} \Big( \lg n + 1 - \lg 3 \Big) + cn
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+T(n) \leq \frac{dn}{3} \lg n - \frac{dn}{3} \lg 3 + \frac{2dn}{3} \lg n + \frac{2dn}{3} - \frac{2dn}{3} \lg 3 + cn
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+T(n) \leq \Big( \frac{dn}{3} + \frac{2dn}{3} \Big) \lg n - \Big( \frac{dn}{3} + \frac{2dn}{3} \Big) \lg 3 + \frac{2dn}{3} + cn
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+T(n) \leq dn \lg n - dn \lg 3 + \frac{2dn}{3} + cn
+\]</div>
+<p>Note, our assumption is that <span class="math notranslate nohighlight">\(T(n) \leq d \cdot n \lg n\)</span>. Thus, we need to prove that <span class="math notranslate nohighlight">\(- dn \lg 3 + \frac{2}{3}dn + cn &lt; 0\)</span>, since we have obtained that</p>
+<div class="math notranslate nohighlight">
+\[
+T(n) \leq dn \lg n - dn \lg 3 + \frac{2}{3}dn + cn
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+T(n) \leq dn \lg n - \Big( dn \lg 3 - \frac{2}{3}dn - cn \Big)
+\]</div>
+<p>Hence, let’s verify that <span class="math notranslate nohighlight">\(dn \lg 3 - \frac{2}{3}dn - cn &gt; 0\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+dn \lg 3 - \frac{2}{3}dn - cn &gt; 0 \implies d \lg 3 - \frac{2}{3}d &gt; c \implies d &gt; \frac{c}{\lg 3 - \frac{2}{3}}
+\]</div>
+<p>Therefore, by mathematical induction <span class="math notranslate nohighlight">\(T(n) \leq dn \lg n\)</span> as long as the inequality <span class="math notranslate nohighlight">\(d &gt; \frac{c}{\lg 3 - \frac{2}{3}}\)</span> is satisfied.</p>
+<section id="reasoning-process">
+<h3>Reasoning Process<a class="headerlink" href="#reasoning-process" title="Link to this heading">#</a></h3>
+<p>I think it is easier to see what needs to be done with the substitution method when we convert the expression we want to prove into a negative format. For instance, our initial assumption is <span class="math notranslate nohighlight">\(T(n) \leq d \cdot n \lg n\)</span>, and we obtained that</p>
+<div class="math notranslate nohighlight">
+\[
+T(n) \leq d \cdot n \lg n - d \cdot n \lg 3 + \frac{2}{3} d \cdot n + c \cdot n
+\]</div>
+<p>Thus, we need to check that there exists some <span class="math notranslate nohighlight">\(\delta\)</span> where <span class="math notranslate nohighlight">\(T(n) \leq d \cdot n \lg n - \delta\)</span>. Because if our assumption is that <span class="math notranslate nohighlight">\(T(n) \leq d \cdot n \lg n\)</span>, it follows that <span class="math notranslate nohighlight">\(T(n) \leq d \cdot n \lg n - \delta\)</span>.</p>
+<p>This <span class="math notranslate nohighlight">\(\delta\)</span> is the part of the equation that we need to prove is positive. From our previous steps, we found that</p>
+<div class="math notranslate nohighlight">
+\[
+\delta = d \cdot n \lg 3 - \frac{2}{3} d \cdot n - c \cdot n
+\]</div>
+<p>We just need to show that <span class="math notranslate nohighlight">\(\delta &gt; 0\)</span>.</p>
+<p><strong>Example:</strong> <span class="math notranslate nohighlight">\(T(n) = 4T(\frac{n}{2}) + n\)</span></p>
+<p>Our first hypothesis will be that <span class="math notranslate nohighlight">\(T(n) = O(n^3)\)</span>. That is, <span class="math notranslate nohighlight">\(T(n) \leq cn^3\)</span>. Thus,</p>
+<div class="math notranslate nohighlight">
+\[
+T(n) = 4T(\frac{n}{2}) + n \leq 4c(\frac{n}{2})^3 + n = 4c \cdot \frac{n^3}{8} + n = \frac{cn^3}{2} + n
+\]</div>
+<p>In order for our hypothesis to be true, we need to rewrite the equation above using its negative form. That is,</p>
+<div class="math notranslate nohighlight">
+\[
+T(n) \leq cn^3 - \delta = cn^3 - \Big(  \frac{cn^3}{2} - n \Big)
+\]</div>
+<p>Note how <span class="math notranslate nohighlight">\(cn^3 - \Big(  \frac{cn^3}{2} - n \Big) = \frac{cn^3}{2} + n\)</span> which is the same we obtained in the equation above. We’re rewriting our equation for an easier understanding of what we should do. Proceeding with the analysis we have,</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{cn^3}{2} - n \geq 0 \implies \frac{cn^3}{2} \geq n \implies \frac{cn^2}{2} \geq 1 \implies cn^2 \geq 2
+\]</div>
+<p>We see that for <span class="math notranslate nohighlight">\(n \geq 1\)</span> and <span class="math notranslate nohighlight">\(c \geq 2\)</span> we have <span class="math notranslate nohighlight">\(\frac{cn^3}{2} - n \geq 0\)</span>. Therefore,</p>
+<div class="math notranslate nohighlight">
+\[
+cn^3 \geq cn^3 - \Big(  \frac{cn^3}{2} - n \Big) \iff \frac{cn^3}{2} - n \geq 0
+\]</div>
+<p>By mathematical induction, if the equation above is indeed true then we have that <span class="math notranslate nohighlight">\(T(n) \leq cn^3\)</span>.</p>
+<p>Even though our analysis until now is correct, we might be able to find some tighter function. Thus, let’s check if the hypothesis of <span class="math notranslate nohighlight">\(T(n) = O(n^2)\)</span> fits.</p>
+<div class="math notranslate nohighlight">
+\[
+T(n) = 4c(\frac{n}{2})^2 + n = cn^2 + n
+\]</div>
+<p>We want to show that <span class="math notranslate nohighlight">\(T(n) \leq cn^2\)</span>. Thus,</p>
+<div class="math notranslate nohighlight">
+\[
+T(n) \leq cn^2 \implies cn^2 + n \leq cn^2
+\]</div>
+<p>Let’s now analyze the negative format of this equation. That is,</p>
+<div class="math notranslate nohighlight">
+\[
+cn^2 - \delta = cn^2 - ( - n) \leq cn^2, \quad \text{where } \delta = -n
+\]</div>
+<p>For the equation to hold, <span class="math notranslate nohighlight">\(n\)</span> would need to be a negative number, but <strong><span class="math notranslate nohighlight">\(n\)</span> cannot be negative</strong>. Therefore, this equation doesn’t hold. Let’s then make a slight change to our hypothesis:</p>
+<div class="math notranslate nohighlight">
+\[
+T(n) = O(n^2), \text{ where } T(n) \leq c_1 n^2 + c_2 n
+\]</div>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> Remember: for time complexity analysis, we don’t consider the lower-order terms. Thus, <span class="math notranslate nohighlight">\(O(n^2) = c_1 n^2 + c_2 n + c_3 n + \cdots + c_k n = c_1 n^2\)</span></p>
+</div></blockquote>
+<p>Then, we have:</p>
+<div class="math notranslate nohighlight">
+\[
+T(n) = 4T\left(\frac{n}{2}\right) + n \leq 4\left[ c_1\left(\frac{n}{2}\right)^2 + c_2\left(\frac{n}{2}\right) \right] + n
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+T(n) \leq 4\left[ c_1\left(\frac{n^2}{4}\right) + c_2\left(\frac{n}{2}\right) \right] + n = c_1n^2 + 2c_2n + n
+\]</div>
+<p>Let’s once again compute the negative part of the equation. That is,</p>
+<div class="math notranslate nohighlight">
+\[
+T(n) \leq c_1n^2 + c_2n - \delta, \text{ where } \delta = -c_2n - n
+\]</div>
+<p>To show that <span class="math notranslate nohighlight">\(\delta &gt; 0\)</span>, we have:</p>
+<div class="math notranslate nohighlight">
+\[
+\delta &gt; 0 \implies -c_2n - n &gt; 0 \implies c_2 \geq 1
+\]</div>
+<p>Therefore, <span class="math notranslate nohighlight">\(c_1n^2 + c_2n - \delta \leq c_1n^2 + c_2n\)</span> as long as <span class="math notranslate nohighlight">\(\delta = -c_2n - n\)</span> and <span class="math notranslate nohighlight">\(c_2 \geq 1\)</span>. By mathematical induction:</p>
+<div class="math notranslate nohighlight">
+\[
+\text{If} \ c_1n^2 + c_2n \geq c_1n^2 + c_2n - \big( -c_2n - n \big)
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\text{and If} \ T(n) \leq c_1n^2 + c_2n - \big( -c_2n - n \big)
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\text{then} \ T(n) \leq c_1n^2 + c_2n
+\]</div>
+<p>Which proves that <strong><span class="math notranslate nohighlight">\(T(n) = O(n^2)\)</span></strong></p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> I recommend this Youtube video from for a more in-depth analysis on how to solve such equations <a class="reference external" href="https://www.youtube.com/watch?v=uWpFXTUXMXw&amp;amp;t=1424s">video link</a>.</p>
+</div></blockquote>
+</section>
+</section>
+<section id="master-method">
+<h2>Master Method<a class="headerlink" href="#master-method" title="Link to this heading">#</a></h2>
+<p>The master method provides a straightforward way to solve recurrences of the form <span class="math notranslate nohighlight">\(T(n) = aT\left(\frac{n}{b}\right) + f(n)\)</span>, where <span class="math notranslate nohighlight">\(a \geq 1\)</span> and <span class="math notranslate nohighlight">\(b &gt; 1\)</span>. This method compares the function <span class="math notranslate nohighlight">\(f(n)\)</span> to <span class="math notranslate nohighlight">\(n^{\log_b a}\)</span> and determines the time complexity based on this <strong>comparison</strong>. The master method is powerful for a wide range of recurrences, making it a commonly used tool in algorithm analysis.</p>
+<ul class="simple">
+<li><p>Case 1: <span class="math notranslate nohighlight">\(f(n) = O(n^c)\)</span> where <span class="math notranslate nohighlight">\(c &lt; \log_b{a}\)</span></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+T(n) = O(n^{\log_b{a}})
+\]</div>
+<ul class="simple">
+<li><p>Case 2: <span class="math notranslate nohighlight">\(f(n) = \Theta(n^c)\)</span> where <span class="math notranslate nohighlight">\(c = \log_b{a}\)</span></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+T(n) = O(n^c \log{n}) = O(n^{\log_b{a}} \log{n})
+\]</div>
+<ul class="simple">
+<li><p>Case 3: <span class="math notranslate nohighlight">\(f(n) = \Omega(n^c)\)</span> where <span class="math notranslate nohighlight">\(c &gt; \log_b{a}\)</span></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+T(n) = O(f(n))
+\]</div>
+<p>provided that <span class="math notranslate nohighlight">\(af\left(\frac{n}{b}\right) \leq kf(n)\)</span> for some <span class="math notranslate nohighlight">\(k &lt; 1\)</span> and sufficiently large <span class="math notranslate nohighlight">\(n\)</span>.</p>
+<p><strong>Example 1</strong>
+Consider the recurrence:</p>
+<div class="math notranslate nohighlight">
+\[
+T(n) = 2T\left(\frac{n}{2}\right) + n
+\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(a = 2\)</span>, <span class="math notranslate nohighlight">\(b = 2\)</span>, and <span class="math notranslate nohighlight">\(f(n) = n\)</span>. We compare <span class="math notranslate nohighlight">\(f(n)\)</span> with <span class="math notranslate nohighlight">\(n^{\log_b{a}}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\log_b{a} = \log_2{2} = 1
+\]</div>
+<p>Thus, <span class="math notranslate nohighlight">\(f(n) = \Theta(n^1)\)</span>. By Case 2, we have:</p>
+<div class="math notranslate nohighlight">
+\[
+T(n) = O(n \log{n})
+\]</div>
+<p><strong>Example 2</strong>
+Consider the recurrence:</p>
+<div class="math notranslate nohighlight">
+\[
+T(n) = 3T\left(\frac{n}{4}\right) + n^2
+\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(a = 3\)</span>, <span class="math notranslate nohighlight">\(b = 4\)</span>, and <span class="math notranslate nohighlight">\(f(n) = n^2\)</span>. We compare <span class="math notranslate nohighlight">\(f(n)\)</span> with <span class="math notranslate nohighlight">\(n^{\log_b{a}}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\log_b{a} = \log_4{3}
+\]</div>
+<p>Since <span class="math notranslate nohighlight">\(n^2 = \Omega(n^{\log_4{3}})\)</span> and <span class="math notranslate nohighlight">\(c &gt; \log_4{3}\)</span>, by Case 3, we have:</p>
+<div class="math notranslate nohighlight">
+\[
+T(n) = O(n^2)
+\]</div>
+<p>provided that <span class="math notranslate nohighlight">\(3\left(\frac{n}{4}\right)^2 \leq k n^2\)</span> for some <span class="math notranslate nohighlight">\(k &lt; 1\)</span> and sufficiently large <span class="math notranslate nohighlight">\(n\)</span>.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="comp-time-complexity.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Computing Time Complexity</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="sorting.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Sorting</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recursion-tree-method">Recursion Tree Method</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#substitution-method">Substitution Method</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reasoning-process">Reasoning Process</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#master-method">Master Method</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Igor L.R. Azevedo
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

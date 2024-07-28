@@ -1,0 +1,1191 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Sorting &#8212; A Not-Too-Short, Not-Quite-Long Summary of Algorithms</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'sorting';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="References" href="references.html" />
+    <link rel="prev" title="Computing Time Complexity (Continue)" href="comp-time-complexity-cont.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="A Not-Too-Short, Not-Quite-Long Summary of Algorithms - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="A Not-Too-Short, Not-Quite-Long Summary of Algorithms - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    A Not-Too-Short, Not-Quite-Long Summary of Algorithms
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction to Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interface-data-structures.html">Interfaces &amp; Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="math-induction.html">Mathematical Induction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="comp-time-complexity.html">Computing Time Complexity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="comp-time-complexity-cont.html">Computing Time Complexity (Continue)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Sorting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fsorting.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/sorting.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Sorting</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-interface">Set Interface</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#in-place-algorithm">In-Place Algorithm</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#non-in-place-algorithm">Non In-Place Algorithm</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#permutation-sort">Permutation Sort</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#insertion-sort">Insertion Sort</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merge-sort">Merge Sort</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#running-time-of-the-divide-and-conquer-part">Running time of the divide-and-conquer part</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bubble-sort">Bubble Sort</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-complexity">Time Complexity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heap-sort">Heap Sort</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heaps">Heaps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maintaining-the-heap-property">Maintaining the heap property</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-heap">Building a Heap</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#at-last-the-heapsort-algorithm">At Last, the Heapsort Algorithm</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-sort">Quick Sort</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-of-quicksort">Performance of quicksort</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#worst-case-partitioning">Worst-case partitioning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-case-partitioning">Best-case partitioning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#balanced-partitioning">Balanced partitioning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-randomized-version-of-quicksort">A randomized version of quicksort</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#radix-sort">Radix Sort</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-complexity-comparison">Time Complexity Comparison</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <style>
+table tr:hover {
+    background-color: #FFC0D9 !important;
+}
+</style>
+<section class="tex2jax_ignore mathjax_ignore" id="sorting">
+<h1>Sorting<a class="headerlink" href="#sorting" title="Link to this heading">#</a></h1>
+<p>We will now explore several algorithms aimed at solving the sorting problem:</p>
+<ul class="simple">
+<li><p><strong>Input</strong>: A sequence of <span class="math notranslate nohighlight">\(n\)</span> numbers <span class="math notranslate nohighlight">\(&lt; a_1, a_2, \ldots, a_n &gt;\)</span></p></li>
+<li><p><strong>Output</strong>: A permutation (reordering) <span class="math notranslate nohighlight">\(&lt; a_1', a_2', \ldots, a_n' &gt;\)</span> of the input sequence such that <span class="math notranslate nohighlight">\(a_1' \leq a_2' \leq \cdots \leq a_n'\)</span></p></li>
+</ul>
+<section id="set-interface">
+<h2>Set Interface<a class="headerlink" href="#set-interface" title="Link to this heading">#</a></h2>
+<p>Storing items in an array in arbitrary order can implement a set (though not the most efficient approach). Sorting the stored items by key allows:</p>
+<ul class="simple">
+<li><p>Quick retrieval of <em>min</em> and <em>max</em> values (at the first and last index of the array).</p></li>
+<li><p>Rapid search using binary search, achieving <span class="math notranslate nohighlight">\(O(\log n)\)</span> time complexity.</p></li>
+</ul>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Data Structure</strong></p></th>
+<th class="head"><p><strong>Container</strong></p></th>
+<th class="head"><p><strong>Static</strong></p></th>
+<th class="head"><p><strong>Dynamic</strong></p></th>
+<th class="head"><p><strong>Dynamic</strong></p></th>
+<th class="head"><p><strong>Dynamic</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p><strong>insert(x)</strong></p></td>
+<td><p><strong>find_min()</strong></p></td>
+<td><p><strong>find_prev(i)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><strong>build(x)</strong></p></td>
+<td><p><strong>find(k)</strong></p></td>
+<td><p><strong>delete(k)</strong></p></td>
+<td><p><strong>find_max()</strong></p></td>
+<td><p><strong>find_next(k)</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Array</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(n\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Sorted Array</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(n \log n\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\log n\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(1\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\log n\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><em>Operations comparison of different data structures - <span class="math notranslate nohighlight">\(O(\cdot)\)</span>. This table was removed from the <a class="reference external" href="https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/resources/mit6_006s20_lec3/">lecture 3</a> notes of the class Introduction to Algorithms <span id="id1">[<a class="reference internal" href="references.html#id3" title="Erik Demaine, Jason Ku, and Justin Solomon. 6.006: introduction to algorithms - spring 2020. MIT OpenCourseWare, 2020. Course Description: This course is an introduction to mathematical modeling of computational problems, as well as common algorithms, algorithmic paradigms, and data structures used to solve these problems. It emphasizes the relationship between algorithms and programming and introduces basic performance measures and analysis techniques. URL: https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/.">DKS20</a>]</span>.</em></p>
+</section>
+<section id="in-place-algorithm">
+<h2>In-Place Algorithm<a class="headerlink" href="#in-place-algorithm" title="Link to this heading">#</a></h2>
+<p>An <em>in-place algorithm</em> is one that operates directly on its input data <strong>without requiring extra space proportional to the input size</strong>. In other words, it doesn’t use additional memory to perform its task. Instead, it typically rearranges elements of the input data structure, such as an array or a list, in a way that avoids needing additional storage.</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> <strong>Memory Efficiency</strong>: In-place algorithms are memory efficient as they modify the input data structure without using additional space.</p>
+</div></blockquote>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> <strong>Space Complexity</strong>: They typically have a space complexity of <span class="math notranslate nohighlight">\(O(1)\)</span>, meaning constant extra space is used.</p>
+</div></blockquote>
+</section>
+<section id="non-in-place-algorithm">
+<h2>Non In-Place Algorithm<a class="headerlink" href="#non-in-place-algorithm" title="Link to this heading">#</a></h2>
+<p>A <em>non in-place algorithm</em> requires <strong>additional space</strong> proportional to the size of the input to perform its task. It may use extra memory for creating data structures or managing state during computation.</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> <strong>Additional Space</strong>: Non in-place algorithms may use <span class="math notranslate nohighlight">\(O(n)\)</span> or more space, where <span class="math notranslate nohighlight">\(n\)</span> is the size of the input.</p>
+</div></blockquote>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> <strong>Flexibility</strong>: They can be more flexible in approach and may achieve better time complexity by utilizing extra memory.</p>
+</div></blockquote>
+</section>
+<section id="permutation-sort">
+<h2>Permutation Sort<a class="headerlink" href="#permutation-sort" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> Permutation Sort - Time complexity : <strong><span class="math notranslate nohighlight">\(\Omega(n! \cdot n\)</span>)</strong></p>
+</div></blockquote>
+<p>The pseudocode for permutation sort is shown in Algorithm \ref{algo:perm_sort}. There are <span class="math notranslate nohighlight">\(n!\)</span> permutations of the set <span class="math notranslate nohighlight">\(A\)</span>, and at least one of these permutations will be sorted. For each permutation, we check whether it is sorted in <span class="math notranslate nohighlight">\(\Theta(n)\)</span> time. Regarding the analysis, we can confirm its correctness by case analysis, as it tries all possibilities (brute force). Since the implementation of the function <code class="docutils literal notranslate"><span class="pre">permutations(A)</span></code> is unknown, we must assume <span class="math notranslate nohighlight">\(\Omega(\cdot)\)</span> instead of <span class="math notranslate nohighlight">\(O(\cdot)\)</span>. Consequently, verifying if a permutation is sorted takes <span class="math notranslate nohighlight">\(O(n)\)</span>, and going through all possible permutations takes <span class="math notranslate nohighlight">\(\Omega(n!)\)</span>. Therefore, the total time complexity is <span class="math notranslate nohighlight">\(\Omega(n! \cdot n)\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">permutation_sort</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform permutation sort on array A.</span>
+<span class="sd">    Time complexity: Ω(n! * n)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">permutations</span>
+
+    <span class="k">for</span> <span class="n">B</span> <span class="ow">in</span> <span class="n">permutations</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>  <span class="c1"># Ω(n!)</span>
+        <span class="k">if</span> <span class="n">B</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>  <span class="c1"># O(n)</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>  <span class="c1"># O(1)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="insertion-sort">
+<h2>Insertion Sort<a class="headerlink" href="#insertion-sort" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> Insertion Sort (<strong>in-place</strong>) - Time complexity : <strong><span class="math notranslate nohighlight">\(\Theta(n^2)\)</span></strong> | Space complexity : <strong><span class="math notranslate nohighlight">\(O(1)\)</span></strong></p>
+</div></blockquote>
+<p>Insertion Sort is a simple and intuitive sorting algorithm that builds the final sorted array (or list) one item at a time. It is much like the way you might sort playing cards in your hands. Based on the algorithm \ref{algo:insert_sort} let’s analyze the loop invariant and the correctness of insertion sort. Loop Invariant:</p>
+<ul class="simple">
+<li><p><strong>Initialization</strong>: it’s true prior to the first iteration of the loop</p></li>
+<li><p><strong>Maintenance</strong>: it’s true before an iteration of the loop, it remains true before the next iteration</p></li>
+<li><p><strong>Termination</strong>: when the loop terminates, the invariant gives us a useful property that helps show that the algorithm is correct</p></li>
+</ul>
+<figure class="align-default" id="id2">
+<a class="mb-1 reference internal image-reference" href="_images/insertion_sort.png"><img alt="Insertion sort illustration." class="mb-1" src="_images/insertion_sort.png" style="width: 90%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text">Insertion sort illustration.</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">insertion_sort</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform insertion sort on array A.</span>
+<span class="sd">    Time complexity: Θ(n^2)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)):</span>  <span class="c1"># Θ(n)</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>  <span class="c1"># insert A[j] into the sorted sequence A[1, ..., j-1]</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">key</span><span class="p">:</span>  <span class="c1"># Θ(n)</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">A</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span>
+    <span class="k">return</span> <span class="n">A</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="merge-sort">
+<h2>Merge Sort<a class="headerlink" href="#merge-sort" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> Merge Sort (<strong>Non in-place</strong>) - Time complexity : <strong><span class="math notranslate nohighlight">\(\Theta(n \log n)\)</span></strong> | Space complexity : <strong><span class="math notranslate nohighlight">\(O(n)\)</span></strong></p>
+</div></blockquote>
+<p>Merge Sort is an efficient, stable, and comparison-based sorting algorithm that follows the <em>divide-and-conquer</em> paradigm. It divides the input array into two halves, sorts each half, and then merges the two sorted halves. The code for this algorithm was divided into two parts: <strong>merge</strong> and <strong>merge-sort</strong>. A schematic of the algorithm can be seen in the figure below. In general we have:</p>
+<ul class="simple">
+<li><p><strong>Divide</strong> the problem into smaller subproblems</p></li>
+<li><p><strong>Conquer</strong> the subproblems by solving them recursively</p></li>
+<li><p><strong>Combine</strong> the solutions into one final answer</p></li>
+</ul>
+<p>For the <strong>merge</strong> method, each basic step of comparing two elements at a time takes constant time. However, we perform at most n comparisons thus merging takes <strong><span class="math notranslate nohighlight">\(\Theta(n)\)</span></strong>.</p>
+<section id="running-time-of-the-divide-and-conquer-part">
+<h3>Running time of the divide-and-conquer part<a class="headerlink" href="#running-time-of-the-divide-and-conquer-part" title="Link to this heading">#</a></h3>
+<p>We can solve this problem using the substitution method. Let’s start with the hypothesis that <span class="math notranslate nohighlight">\(T(n) = O(n \log n)\)</span>. For Merge Sort, the recurrence relation is <span class="math notranslate nohighlight">\(T(n) = 2T(\lfloor n/2 \rfloor) + cn\)</span>. Assuming that the number of elements is a power of two, we have:</p>
+<div class="math notranslate nohighlight">
+\[T(n) = 2T(n/2) + cn \leq d n \log n\]</div>
+<div class="math notranslate nohighlight">
+\[T(n) \leq 2 \left( \frac{d n}{2} \log \left( \frac{n}{2} \right) \right) + cn\]</div>
+<p>Using the strategy of finding a negative value, we need to find a <span class="math notranslate nohighlight">\(\delta\)</span> such that:</p>
+<div class="math notranslate nohighlight">
+\[T(n) \leq 2 \left( \frac{d n}{2} \log \left( \frac{n}{2} \right) \right) + cn = d n \left( \log(n) - \log(2) \right) + cn\]</div>
+<div class="math notranslate nohighlight">
+\[T(n) \leq d n \log(n) - d n \log(2) + cn\]</div>
+<p>This results in:</p>
+<div class="math notranslate nohighlight">
+\[T(n) \leq d n \log(n) - \delta, \text{ where } \delta = d n \log(2) - cn\]</div>
+<p>We need</p>
+<p>to show that <span class="math notranslate nohighlight">\(\delta &gt; 0\)</span>. Assuming <span class="math notranslate nohighlight">\(\log 2 = 1\)</span>, we have:</p>
+<div class="math notranslate nohighlight">
+\[\delta &gt; 0 \implies d n - cn &gt; 0 \implies c &lt; d\]</div>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> Hence, by mathematical induction, if <span class="math notranslate nohighlight">\(T(n) \leq d n \log(n) - d n \log(2) + cn\)</span> is true, and <span class="math notranslate nohighlight">\(d n \log(n) \geq d n \log(n) - d n \log(2) + cn\)</span>, then <span class="math notranslate nohighlight">\(T(n) \leq d n \log(n)\)</span>. Therefore, <span class="math notranslate nohighlight">\(\Theta(n \log(n))\)</span>.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Merge subarrays of A.</span>
+<span class="sd">    Time complexity: Θ(n)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n1</span> <span class="o">=</span> <span class="n">q</span> <span class="o">-</span> <span class="n">p</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">n2</span> <span class="o">=</span> <span class="n">r</span> <span class="o">-</span> <span class="n">q</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">p</span><span class="p">:</span><span class="n">q</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)]</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">q</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)]</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">R</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="k">def</span> <span class="nf">merge_sort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform merge sort on array A.</span>
+<span class="sd">    Time complexity: Θ(n log n)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">:</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">merge_sort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
+        <span class="n">merge_sort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">q</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+        <span class="n">merge</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<figure class="align-default" id="id3">
+<img alt="Merge Sort Schematic" class="mb-1" src="_images/merge_sort.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">Merge Sort Schematic.</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="bubble-sort">
+<h2>Bubble Sort<a class="headerlink" href="#bubble-sort" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> Bubble Sort (in-place) - Time complexity: <span class="math notranslate nohighlight">\(\Theta(n^2)\)</span> | Space complexity: <span class="math notranslate nohighlight">\(O(1)\)</span></p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bubble_sort</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform bubble sort on array A.</span>
+<span class="sd">    Time complexity: Θ(n^2)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]:</span>
+                <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="time-complexity">
+<h2>Time Complexity<a class="headerlink" href="#time-complexity" title="Link to this heading">#</a></h2>
+<p>We start at the beginning of the array and move downward, possibly swapping elements, until we reach the previously sorted subsection of the array. Each iteration increases in steps or performs fewer comparisons. The total number of comparisons can be approximated by summing up the iterations:</p>
+<div class="math notranslate nohighlight">
+\[
+(n - 1) + (n - 2) + \cdots + 1 = \frac{n(n - 1)}{2}
+\]</div>
+<p>This simplifies to <span class="math notranslate nohighlight">\(\Theta(n^2)\)</span>. This quadratic time complexity arises because in the worst case, we may need to compare each element with every other element, resulting in a total time proportional to <span class="math notranslate nohighlight">\( n^2 \)</span>.</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> Note that the best case scenario for insertion sort is <span class="math notranslate nohighlight">\(\Theta(n)\)</span> whereas for bubble sort is <span class="math notranslate nohighlight">\(\Theta(n^2)\)</span></p>
+</div></blockquote>
+</section>
+<section id="heap-sort">
+<h2>Heap Sort<a class="headerlink" href="#heap-sort" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> Heap Sort (in-place) - Time complexity: <span class="math notranslate nohighlight">\(O(n \log n)\)</span> | Space complexity: <span class="math notranslate nohighlight">\(O(1)\)</span></p>
+</div></blockquote>
+</section>
+<section id="heaps">
+<h2>Heaps<a class="headerlink" href="#heaps" title="Link to this heading">#</a></h2>
+<p>The <strong>binary heap</strong> is a data structure represented as an array that forms a nearly complete binary tree. It has some base operations as shown below and it adheres to specific heap properties:</p>
+<ul class="simple">
+<li><p><strong>max-heap</strong>: each parent node is greater than or equal to its children.</p></li>
+<li><p><strong>min-heap</strong>: each parent node is less than or equal to its children.</p></li>
+</ul>
+<p>To visualize how we can conceive a binary tree given a list please refer to the schematic in figure <a class="reference internal" href="#heap-schema"><span class="std std-ref">Illustration on how to conceive a binary tree.</span></a>.</p>
+<p>Viewing a heap as a tree, we define the height of a node in a heap to be the number of edges on the longest simple downward path from the node to a leaf and we define the height of the heap to be the height of its root.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parent</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">i</span> <span class="o">//</span> <span class="mi">2</span>
+
+<span class="k">def</span> <span class="nf">left</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="k">def</span> <span class="nf">right</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<figure class="align-default" id="heap-schema">
+<img alt="_images/heap_schema.png" class="mb-1" src="_images/heap_schema.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text">Illustration on how to conceive a binary tree.</span><a class="headerlink" href="#heap-schema" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since a heap of <span class="math notranslate nohighlight">\(n\)</span> elements is based on a complete binary tree, its height is <span class="math notranslate nohighlight">\(\Theta(\log n)\)</span>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The basic operations of heaps run in a time at most proportional to the height of the tree and thus take <span class="math notranslate nohighlight">\(O(\log n)\)</span> time.</p>
+</div>
+</section>
+<section id="maintaining-the-heap-property">
+<h2>Maintaining the heap property<a class="headerlink" href="#maintaining-the-heap-property" title="Link to this heading">#</a></h2>
+<p>In order to maintain the max-heap property, the procedure <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code> is called.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">max_heapify</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Maintain the max-heap property.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">largest</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">left</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">right</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="ow">and</span> <span class="n">A</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">A</span><span class="p">[</span><span class="n">largest</span><span class="p">]:</span>
+        <span class="n">largest</span> <span class="o">=</span> <span class="n">l</span>
+    <span class="k">if</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="ow">and</span> <span class="n">A</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">A</span><span class="p">[</span><span class="n">largest</span><span class="p">]:</span>
+        <span class="n">largest</span> <span class="o">=</span> <span class="n">r</span>
+    <span class="k">if</span> <span class="n">largest</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
+        <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">largest</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">largest</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">max_heapify</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">largest</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<figure class="align-default" id="op-max-heapify">
+<img alt="Illustration of how max-heapify works." class="mb-1" src="_images/op_max_heapify.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 6 </span><span class="caption-text">Illustration of how max-heapify works.</span><a class="headerlink" href="#op-max-heapify" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="building-a-heap">
+<h2>Building a Heap<a class="headerlink" href="#building-a-heap" title="Link to this heading">#</a></h2>
+<p>We can use the procedure <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code> in a bottom-up manner to convert an array <span class="math notranslate nohighlight">\(A[0 \ldots n]\)</span> into a max-heap.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">build_max_heap</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Build a max-heap from array A.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">heap_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">max_heapify</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can compute a simple upper bound on the running time of <code class="docutils literal notranslate"><span class="pre">build_max_heap</span></code> as follows:</p>
+<ul class="simple">
+<li><p>Each call to <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code> costs <span class="math notranslate nohighlight">\(O(\log n)\)</span> time.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">build_max_heap</span></code> makes <span class="math notranslate nohighlight">\(O(n)\)</span> such calls.</p></li>
+<li><p>Thus, the running time is <span class="math notranslate nohighlight">\(O(n \log n)\)</span>.</p></li>
+<li><p>However, this upper bound, though correct, is not asymptotically tight.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>An <span class="math notranslate nohighlight">\(n\)</span>-element heap has height <span class="math notranslate nohighlight">\(\lfloor \log n \rfloor\)</span> and at most <span class="math notranslate nohighlight">\(\lceil \frac{n}{2^{h+1}} \rceil\)</span> nodes of any height <span class="math notranslate nohighlight">\(h\)</span>.</p>
+</div>
+<p>Based on the information provided above, we can derive a tighter running time for <code class="docutils literal notranslate"><span class="pre">build_max_heap</span></code>, which is linear. Specifically, <code class="docutils literal notranslate"><span class="pre">build_max_heap</span></code> has a running time of <span class="math notranslate nohighlight">\(O(n)\)</span>. For more details on these mathematical formulations, please refer to Chapter 6, Section 4 of the CLRS book. Additionally, you can see how <code class="docutils literal notranslate"><span class="pre">build_max_heap</span></code> operates through the slide animation <a class="reference external" href="https://docs.google.com/presentation/d/1pt4FI634rITmvfhhSWcyG-xps8JE96WqYUIicNg2NfI/edit?usp=sharing">link</a> and the figure below.</p>
+<figure class="align-default" id="building-max-heap">
+<img alt="Illustration of how build-max-heap works." class="mb-1" src="_images/building_max_heap.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 7 </span><span class="caption-text">Illustration of how build-max-heap works.</span><a class="headerlink" href="#building-max-heap" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="at-last-the-heapsort-algorithm">
+<h2>At Last, the Heapsort Algorithm<a class="headerlink" href="#at-last-the-heapsort-algorithm" title="Link to this heading">#</a></h2>
+<p>The heapsort algorithm starts by using <code class="docutils literal notranslate"><span class="pre">build_max_heap</span></code> to build a max-heap on the input array <span class="math notranslate nohighlight">\(A[ \ldots n]\)</span>, where <span class="math notranslate nohighlight">\(n = A.length\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">heap_sort</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform heapsort on array A.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">build_max_heap</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">max_heapify</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<figure class="align-default" id="id4">
+<img alt="Illustration of the heap sort process." class="mb-1" src="_images/heap_sort.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 8 </span><span class="caption-text">Illustration of the heap sort process.</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="quick-sort">
+<h2>Quick Sort<a class="headerlink" href="#quick-sort" title="Link to this heading">#</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Quick Sort (in-place) - Time complexity: <span class="math notranslate nohighlight">\(\Theta(n \log n)\)</span> | Space complexity: <span class="math notranslate nohighlight">\(O(1)\)</span> | Worst case running time: <span class="math notranslate nohighlight">\(\Theta(n^2)\)</span></p>
+</div>
+<p>Quick Sort is a highly efficient sorting algorithm that uses the divide-and-conquer strategy. The algorithm works as follows:</p>
+<ul class="simple">
+<li><p>Choose a pivot element from the array.</p></li>
+<li><p>Partition the array into two sub-arrays: elements less than the pivot and elements greater than the pivot.</p></li>
+<li><p>Recursively apply the above steps to the sub-arrays.</p></li>
+<li><p>Combine the sub-arrays to produce the sorted array.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">partition</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Partition the array A.</span>
+<span class="sd">    Time complexity: Θ(n)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">p</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+        <span class="k">if</span>
+
+ <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">x</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">A</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="k">def</span> <span class="nf">quicksort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform quicksort on array A.</span>
+<span class="sd">    Time complexity: Θ(n log n)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">:</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">partition</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+        <span class="n">quicksort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">quicksort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">q</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>  <span class="n">File</span> <span class="o">&lt;</span><span class="n">tokenize</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">11</span>
+    <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">x</span><span class="p">:</span>
+    <span class="o">^</span>
+<span class="ne">IndentationError</span>: unindent does not match any outer indentation level
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="performance-of-quicksort">
+<h2>Performance of quicksort<a class="headerlink" href="#performance-of-quicksort" title="Link to this heading">#</a></h2>
+<p>The running time of quicksort depends on whether the partitioning is balanced or unbalanced.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the partitioning is balanced, the algorithm runs asymptotically as fast as merge sort.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the partitioning is unbalanced, the algorithm runs asymptotically as slowly as insertion sort.</p>
+</div>
+<section id="worst-case-partitioning">
+<h3>Worst-case partitioning<a class="headerlink" href="#worst-case-partitioning" title="Link to this heading">#</a></h3>
+<p>The worst-case scenario for quicksort occurs when the partitioning process results in one subproblem with <span class="math notranslate nohighlight">\(n - 1\)</span> elements and another with <span class="math notranslate nohighlight">\(0\)</span> elements. For example, if the array is already sorted in ascending order and the pivot chosen is always the last element, quicksort will exhibit its worst-case behavior. Such a scenario yields a <span class="math notranslate nohighlight">\(\Theta(n^2)\)</span> running time.</p>
+</section>
+<section id="best-case-partitioning">
+<h3>Best-case partitioning<a class="headerlink" href="#best-case-partitioning" title="Link to this heading">#</a></h3>
+<p>In the best-case scenario, the partitioning process of quicksort divides the array into two nearly equal subarrays (one of size <span class="math notranslate nohighlight">\(\lfloor n/2 \rfloor\)</span> and one of size <span class="math notranslate nohighlight">\(\lfloor n/2 \rfloor\)</span>). This means that each pivot chosen perfectly splits the array such that the sizes of the subarrays are as balanced as possible, ideally with each containing roughly half of the elements. When this occurs, the depth of the recursion is minimized, and the overall time complexity of quicksort is reduced to <span class="math notranslate nohighlight">\(\Theta(n \log n)\)</span>. That is,</p>
+<p>[
+T(n) = 2T(n/2) + \Theta(n) \implies T(n) = \Theta(n \log n)
+]</p>
+<p>This balanced partitioning ensures that the workload is evenly distributed across the recursive calls, resulting in efficient sorting performance.</p>
+</section>
+<section id="balanced-partitioning">
+<h3>Balanced partitioning<a class="headerlink" href="#balanced-partitioning" title="Link to this heading">#</a></h3>
+<p>The average-case running time of quicksort is significantly closer to the best-case scenario than to the worst-case scenario. This means that the performance of quicksort largely depends on the relative ordering of the elements in the input array rather than the specific values of the elements. For instance, if the elements are distributed in such a way that each pivot results in two subarrays of nearly equal size, quicksort will efficiently sort the array. An example of this is an array where the elements are randomly shuffled, leading to balanced partitions during the sorting process.</p>
+</section>
+<section id="a-randomized-version-of-quicksort">
+<h3>A randomized version of quicksort<a class="headerlink" href="#a-randomized-version-of-quicksort" title="Link to this heading">#</a></h3>
+<p>In examining the average-case behavior of quicksort, we assume that all permutations of the input array are equally likely. However, this assumption may not always hold in practice. To address this, we can use a randomized version of quicksort, which helps ensure that the pivot selection is not influenced by the initial ordering of the elements. By randomly selecting the pivot, we aim to achieve more balanced partitions on average, thereby improving the algorithm’s performance.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="k">def</span> <span class="nf">randomized_partition</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Randomized partitioning of the array A.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+    <span class="n">A</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">partition</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">randomized_quicksort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform randomized quicksort on array A.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">:</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">randomized_partition</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+        <span class="n">randomized_quicksort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">randomized_quicksort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">q</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>I recommend reading this <a class="reference external" href="https://qr.ae/psQO91">Quora discussion</a>, as it includes comments from one of the authors of the CLRS book, which we are using as a reference for this summary.</p>
+</div>
+</section>
+</section>
+<section id="radix-sort">
+<h2>Radix Sort<a class="headerlink" href="#radix-sort" title="Link to this heading">#</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Radix Sort - Time complexity: <span class="math notranslate nohighlight">\(\Theta(d \cdot (n + k))\)</span> | Space complexity: <span class="math notranslate nohighlight">\(O(n + k)\)</span></p>
+</div>
+<p>Radix Sort is a non-comparative sorting algorithm that sorts numbers by processing individual digits. It operates by sorting the elements digit by digit, starting from the least significant digit (LSD) to the most significant digit (MSD). To achieve this, Radix Sort leverages a stable subroutine, such as Counting Sort, to sort the elements based on each digit. This ensures that the relative order of elements with equal digits is maintained, resulting in a stable sort.</p>
+<p>The key idea behind Radix Sort is to treat the elements as strings of digits and process each digit position independently. This approach can be highly efficient for sorting large numbers of small integers or fixed-length strings.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">counting_sort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">exp</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A function to do counting sort of A according to the digit represented by exp.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">//</span> <span class="n">exp</span>
+        <span class="n">count</span><span class="p">[</span><span class="n">index</span> <span class="o">%</span> <span class="mi">10</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+        <span class="n">count</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">count</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">i</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">//</span> <span class="n">exp</span>
+        <span class="n">output</span><span class="p">[</span><span class="n">count</span><span class="p">[</span><span class="n">index</span> <span class="o">%</span> <span class="mi">10</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">count</span><span class="p">[</span><span class="n">index</span> <span class="o">%</span> <span class="mi">10</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">output</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">radix_sort</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform radix sort on array A.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">max1</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">exp</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">max1</span> <span class="o">//</span> <span class="n">exp</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">counting_sort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">exp</span><span class="p">)</span>
+        <span class="n">exp</span> <span class="o">*=</span> <span class="mi">10</span>
+</pre></div>
+</div>
+</div>
+</div>
+<figure class="align-default" id="id5">
+<img alt="Illustration of the radix sort process." class="mb-1" src="_images/radix_sort.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 9 </span><span class="caption-text">Illustration of the radix sort process.</span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="time-complexity-comparison">
+<h2>Time Complexity Comparison<a class="headerlink" href="#time-complexity-comparison" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table" id="tab-sorting-algorithms">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Comparison of Sorting Algorithms</span><a class="headerlink" href="#tab-sorting-algorithms" title="Link to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Algorithm</strong></p></th>
+<th class="head"><p><strong>Time Complexity</strong></p></th>
+<th class="head"><p><strong>In-place?</strong></p></th>
+<th class="head"><p><strong>Stable?</strong></p></th>
+<th class="head"><p><strong>Comments</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Bubble Sort</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Theta(n^2)\)</span></p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>Simple but inefficient for large datasets</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Selection Sort</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Theta(n^2)\)</span></p></td>
+<td><p>Yes</p></td>
+<td><p>No</p></td>
+<td><p>Always performs <span class="math notranslate nohighlight">\(\frac{n(n-1)}{2}\)</span> comparisons</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Insertion Sort</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Theta(n^2)\)</span></p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>Efficient for small or nearly sorted datasets</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Merge Sort</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Theta(n \log n)\)</span></p></td>
+<td><p>No</p></td>
+<td><p>Yes</p></td>
+<td><p>Requires additional space for merging</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Quick Sort</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Theta(n \log n)\)</span></p></td>
+<td><p>Yes</p></td>
+<td><p>No</p></td>
+<td><p>Fast but worst-case <span class="math notranslate nohighlight">\(\Theta(n^2)\)</span>; randomization helps</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Heap Sort</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Theta(n \log n)\)</span></p></td>
+<td><p>Yes</p></td>
+<td><p>No</p></td>
+<td><p>Good worst-case performance, not stable</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Counting Sort</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Theta(n + u)\)</span></p></td>
+<td><p>No</p></td>
+<td><p>Yes</p></td>
+<td><p><span class="math notranslate nohighlight">\(O(n)\)</span> when <span class="math notranslate nohighlight">\(u = O(n)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Radix Sort</strong></p></td>
+<td><p><span class="math notranslate nohighlight">\(\Theta(d \cdot (n + k))\)</span></p></td>
+<td><p>No</p></td>
+<td><p>Yes</p></td>
+<td><p>Efficient for integers or fixed-length strings</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="comp-time-complexity-cont.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Computing Time Complexity (Continue)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="references.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">References</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-interface">Set Interface</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#in-place-algorithm">In-Place Algorithm</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#non-in-place-algorithm">Non In-Place Algorithm</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#permutation-sort">Permutation Sort</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#insertion-sort">Insertion Sort</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merge-sort">Merge Sort</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#running-time-of-the-divide-and-conquer-part">Running time of the divide-and-conquer part</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bubble-sort">Bubble Sort</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-complexity">Time Complexity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heap-sort">Heap Sort</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heaps">Heaps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maintaining-the-heap-property">Maintaining the heap property</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-heap">Building a Heap</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#at-last-the-heapsort-algorithm">At Last, the Heapsort Algorithm</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-sort">Quick Sort</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-of-quicksort">Performance of quicksort</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#worst-case-partitioning">Worst-case partitioning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-case-partitioning">Best-case partitioning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#balanced-partitioning">Balanced partitioning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-randomized-version-of-quicksort">A randomized version of quicksort</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#radix-sort">Radix Sort</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-complexity-comparison">Time Complexity Comparison</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Igor L.R. Azevedo
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

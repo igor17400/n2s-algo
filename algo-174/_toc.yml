@@ -1,0 +1,13 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+chapters:
+- file: introduction
+- file: interface-data-structures
+- file: math-induction
+- file: comp-time-complexity
+- file: comp-time-complexity-cont
+- file: sorting
+- file: references

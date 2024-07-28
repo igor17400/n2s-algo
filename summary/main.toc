@@ -64,3 +64,5 @@
 \contentsline {section}{\numberline {14}Minimum Spanning Trees}{32}{section.14}%
 \contentsline {section}{\numberline {15}Dynamic Programming}{32}{section.15}%
 \contentsline {subsection}{\numberline {15.1}0/1 Knapsack}{32}{subsection.15.1}%
+\contentsline {subsubsection}{\numberline {15.1.1}Memoization}{33}{subsubsection.15.1.1}%
+\contentsline {subsection}{\numberline {15.2}A More \csqQQ {34}Robust\csqQQ {34} (Dynamic Programming) Approach to 0/1 Knapsack}{35}{subsection.15.2}%

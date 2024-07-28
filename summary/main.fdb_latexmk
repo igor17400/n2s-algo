@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex main"] 1721638573 "main.aux" "main.bbl" "main" 1721638589 0
-  "./ResearchPaperBib.bib" 1721092404 1847 0d460087f1a6cc8304056fcd7699c547 ""
+["bibtex main"] 1722065530 "main.aux" "main.bbl" "main" 1722065538 0
+  "./ResearchPaperBib.bib" 1722065521 1847 0d460087f1a6cc8304056fcd7699c547 ""
   "/usr/local/texlive/2023/texmf-dist/bibtex/bst/base/apalike.bst" 1292289607 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "main.aux" 1721638589 21463 f571a2f7168b2bf958ebc156af5fa015 "pdflatex"
+  "main.aux" 1722065537 24026 d8006fb0083af68078238396e4accd52 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1721638583 "/Users/igorlimarochaazevedo/Programming/Algorithms/algorithms-174/summary/main.tex" "main.pdf" "main" 1721638589 0
-  "/Users/igorlimarochaazevedo/Programming/Algorithms/algorithms-174/summary/main.tex" 1721638583 93361 ceb77d0b26c9f6d5c21797a5614b1b05 ""
+["pdflatex"] 1722065530 "/Users/igorlimarochaazevedo/Programming/Algorithms/algorithms-174/summary/main.tex" "main.pdf" "main" 1722065538 0
+  "/Users/igorlimarochaazevedo/Programming/Algorithms/algorithms-174/summary/main.tex" 1721988220 103261 4b06cdba79676af801f0d2468b49a686 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -118,6 +118,7 @@
   "/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex" 1601326656 35249 abd4adf948f960299a4b3d27c5dddf46 ""
   "/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformations.code.tex" 1673816307 22012 81b34a0aa8fa1a6158cc6220b00e4f10 ""
   "/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransparency.code.tex" 1601326656 8893 e851de2175338fdf7c17f3e091d94618 ""
+  "/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarymatrix.code.tex" 1673816307 4228 c39d423dc1a80da31c8c67bf1067f384 ""
   "/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarytopaths.code.tex" 1608933718 11518 738408f795261b70ce8dd47459171309 ""
   "/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex" 1673816307 186782 af500404a9edec4d362912fe762ded92 ""
   "/usr/local/texlive/2023/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.code.tex" 1601326656 32995 ac577023e12c0e4bd8aa420b2e852d1a ""
@@ -246,11 +247,11 @@
   "figures/radix_sort.png" 1721092404 49952 42fb4b95c2c97feffd1a5ef3461f1f37 ""
   "figures/recursive_tree.png" 1721092404 79507 4af75e6d11c57b57b3bd224694a60db1 ""
   "figures/recursive_tree_example.png" 1721092404 103638 e065673a2da6fe17d72fb53c519bacfd ""
-  "main.aux" 1721638589 21463 f571a2f7168b2bf958ebc156af5fa015 "pdflatex"
-  "main.bbl" 1721638573 788 b2497d02bfc58ef1fc4ff030f25ad1c8 "bibtex main"
-  "main.out" 1721638589 10338 92faa2496e555e43b5bddf0a709f18a4 "pdflatex"
-  "main.tex" 1721638583 93361 ceb77d0b26c9f6d5c21797a5614b1b05 ""
-  "main.toc" 1721638589 5739 3c489415571a3cb3adb03a59cedd1017 "pdflatex"
+  "main.aux" 1722065537 24026 d8006fb0083af68078238396e4accd52 "pdflatex"
+  "main.bbl" 1722065530 788 b2497d02bfc58ef1fc4ff030f25ad1c8 "bibtex main"
+  "main.out" 1722065537 10863 98d5e1a32d6525a1a7d0151298dac30d "pdflatex"
+  "main.tex" 1721988220 103261 4b06cdba79676af801f0d2468b49a686 ""
+  "main.toc" 1722065537 5980 7cc705ad34d5912beae76fa68410bdf0 "pdflatex"
   (generated)
   "main.aux"
   "main.log"
