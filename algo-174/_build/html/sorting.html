@@ -34,6 +34,7 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=b4b7a797" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -62,7 +63,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'sorting';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="References" href="references.html" />
+    <link rel="next" title="Dynamic Programming" href="dynamic-programming.html" />
     <link rel="prev" title="Computing Time Complexity (Continue)" href="comp-time-complexity-cont.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -188,6 +189,7 @@
 <li class="toctree-l1"><a class="reference internal" href="comp-time-complexity.html">Computing Time Complexity</a></li>
 <li class="toctree-l1"><a class="reference internal" href="comp-time-complexity-cont.html">Computing Time Complexity (Continue)</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Sorting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dynamic-programming.html">Dynamic Programming</a></li>
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
 </ul>
 
@@ -290,7 +292,7 @@
       
       
       
-      <li><a href="_sources/sorting.md" target="_blank"
+      <li><a href="_sources/sorting.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -300,7 +302,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
 </li>
       
@@ -398,14 +400,21 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heap-sort">Heap Sort</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heaps">Heaps</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maintaining-the-heap-property">Maintaining the heap property</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-heap">Building a Heap</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#at-last-the-heapsort-algorithm">At Last, the Heapsort Algorithm</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-heap">Building a Heap</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#animation-maxheap">Animation MaxHeap</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#at-last-the-heapsort-algorithm">At Last, the Heapsort Algorithm</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#animation-heap-sort">Animation Heap Sort</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-sort">Quick Sort</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-of-quicksort">Performance of quicksort</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#worst-case-partitioning">Worst-case partitioning</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-case-partitioning">Best-case partitioning</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#balanced-partitioning">Balanced partitioning</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-randomized-version-of-quicksort">A randomized version of quicksort</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#animation-quicksort">Animation QuickSort</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#radix-sort">Radix Sort</a></li>
@@ -520,8 +529,21 @@ table tr:hover {
     <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">permutations</span>
 
     <span class="k">for</span> <span class="n">B</span> <span class="ow">in</span> <span class="n">permutations</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>  <span class="c1"># Ω(n!)</span>
-        <span class="k">if</span> <span class="n">B</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>  <span class="c1"># O(n)</span>
+        <span class="k">if</span> <span class="nb">list</span><span class="p">(</span><span class="n">B</span><span class="p">)</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>  <span class="c1"># O(n)</span>
             <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>  <span class="c1"># O(1)</span>
+        
+<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsorted array: </span><span class="si">{</span><span class="n">A</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">permutation_sort</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sorted array: </span><span class="si">{</span><span class="n">A</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Unsorted array: [-1, -10, -5, 1, 5, 7, 0, -2, 10, -5, -2]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sorted array: [-1, -10, -5, 1, 5, 7, 0, -2, 10, -5, -2]
 </pre></div>
 </div>
 </div>
@@ -559,6 +581,18 @@ table tr:hover {
             <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="n">A</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span>
     <span class="k">return</span> <span class="n">A</span>
+
+
+<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsorted array: </span><span class="si">{</span><span class="n">A</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">insertion_sort</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sorted array: </span><span class="si">{</span><span class="n">A</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Unsorted array: [-1, -10, -5, 1, 5, 7, 0, -2, 10, -5, -2]
+Sorted array: [-10, -5, -5, -2, -2, -1, 0, 1, 5, 7, 10]
 </pre></div>
 </div>
 </div>
@@ -629,6 +663,18 @@ table tr:hover {
         <span class="n">merge_sort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span>
         <span class="n">merge_sort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">q</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
         <span class="n">merge</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">A</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsorted array: </span><span class="si">{</span><span class="n">A</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">merge_sort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sorted array: </span><span class="si">{</span><span class="n">A</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Unsorted array: [-1, -10, -5, 1, 5, 7, 0, -2, 10, -5, -2]
+Sorted array: [-10, -5, -5, -2, -2, -1, 0, 1, 5, 7, 10]
 </pre></div>
 </div>
 </div>
@@ -658,6 +704,17 @@ table tr:hover {
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]:</span>
                 <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                
+<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsorted array: </span><span class="si">{</span><span class="n">A</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">bubble_sort</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sorted array: </span><span class="si">{</span><span class="n">A</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Unsorted array: [-1, -10, -5, 1, 5, 7, 0, -2, 10, -5, -2]
+Sorted array: [-10, -5, -5, -2, -2, -1, 0, 1, 5, 7, 10]
 </pre></div>
 </div>
 </div>
@@ -705,7 +762,7 @@ table tr:hover {
 </div>
 </div>
 <figure class="align-default" id="heap-schema">
-<img alt="_images/heap_schema.png" class="mb-1" src="_images/heap_schema.png" />
+<a class="mb-1 reference internal image-reference" href="_images/heap_schema.png"><img alt="_images/heap_schema.png" class="mb-1" src="_images/heap_schema.png" style="width: 450px;" /></a>
 <figcaption>
 <p><span class="caption-number">Fig. 5 </span><span class="caption-text">Illustration on how to conceive a binary tree.</span><a class="headerlink" href="#heap-schema" title="Link to this image">#</a></p>
 </figcaption>
@@ -724,7 +781,7 @@ table tr:hover {
 <p>In order to maintain the max-heap property, the procedure <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code> is called.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">max_heapify</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">max_heapify</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">heap_size</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Maintain the max-heap property.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -732,13 +789,13 @@ table tr:hover {
     <span class="n">l</span> <span class="o">=</span> <span class="n">left</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">right</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="ow">and</span> <span class="n">A</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">A</span><span class="p">[</span><span class="n">largest</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">heap_size</span> <span class="ow">and</span> <span class="n">A</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">A</span><span class="p">[</span><span class="n">largest</span><span class="p">]:</span>
         <span class="n">largest</span> <span class="o">=</span> <span class="n">l</span>
-    <span class="k">if</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="ow">and</span> <span class="n">A</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">A</span><span class="p">[</span><span class="n">largest</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="n">heap_size</span> <span class="ow">and</span> <span class="n">A</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">A</span><span class="p">[</span><span class="n">largest</span><span class="p">]:</span>
         <span class="n">largest</span> <span class="o">=</span> <span class="n">r</span>
     <span class="k">if</span> <span class="n">largest</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
         <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">largest</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">largest</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="n">max_heapify</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">largest</span><span class="p">)</span>
+        <span class="n">max_heapify</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">largest</span><span class="p">,</span> <span class="n">heap_size</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -760,8 +817,8 @@ table tr:hover {
 <span class="sd">    Build a max-heap from array A.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">heap_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="n">max_heapify</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">max_heapify</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">heap_size</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -777,13 +834,17 @@ table tr:hover {
 <p class="admonition-title">Note</p>
 <p>An <span class="math notranslate nohighlight">\(n\)</span>-element heap has height <span class="math notranslate nohighlight">\(\lfloor \log n \rfloor\)</span> and at most <span class="math notranslate nohighlight">\(\lceil \frac{n}{2^{h+1}} \rceil\)</span> nodes of any height <span class="math notranslate nohighlight">\(h\)</span>.</p>
 </div>
-<p>Based on the information provided above, we can derive a tighter running time for <code class="docutils literal notranslate"><span class="pre">build_max_heap</span></code>, which is linear. Specifically, <code class="docutils literal notranslate"><span class="pre">build_max_heap</span></code> has a running time of <span class="math notranslate nohighlight">\(O(n)\)</span>. For more details on these mathematical formulations, please refer to Chapter 6, Section 4 of the CLRS book. Additionally, you can see how <code class="docutils literal notranslate"><span class="pre">build_max_heap</span></code> operates through the slide animation <a class="reference external" href="https://docs.google.com/presentation/d/1pt4FI634rITmvfhhSWcyG-xps8JE96WqYUIicNg2NfI/edit?usp=sharing">link</a> and the figure below.</p>
+<p>Based on the information provided above, we can derive a tighter running time for <code class="docutils literal notranslate"><span class="pre">build_max_heap</span></code>, which is linear. Specifically, <code class="docutils literal notranslate"><span class="pre">build_max_heap</span></code> has a running time of <span class="math notranslate nohighlight">\(O(n)\)</span>. For more details on these mathematical formulations, please refer to Chapter 6, Section 4 of the CLRS book <span id="id4">[<a class="reference internal" href="references.html#id3" title="Erik Demaine, Jason Ku, and Justin Solomon. 6.006: introduction to algorithms - spring 2020. MIT OpenCourseWare, 2020. Course Description: This course is an introduction to mathematical modeling of computational problems, as well as common algorithms, algorithmic paradigms, and data structures used to solve these problems. It emphasizes the relationship between algorithms and programming and introduces basic performance measures and analysis techniques. URL: https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/.">DKS20</a>]</span>.</p>
 <figure class="align-default" id="building-max-heap">
 <img alt="Illustration of how build-max-heap works." class="mb-1" src="_images/building_max_heap.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 7 </span><span class="caption-text">Illustration of how build-max-heap works.</span><a class="headerlink" href="#building-max-heap" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
+<section id="animation-maxheap">
+<h3>Animation MaxHeap<a class="headerlink" href="#animation-maxheap" title="Link to this heading">#</a></h3>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQ1xHAzejLbKYdVjVmC-kxWIiLrIDH2h-UHFP5Ps7N7hK__QNCiuBtzwwqakH28cNwpurRRVfSgog2Q/embed?start=false&loop=false&delayms=3000" frameborder="0" width="840" height="501" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+</section>
 </section>
 <section id="at-last-the-heapsort-algorithm">
 <h2>At Last, the Heapsort Algorithm<a class="headerlink" href="#at-last-the-heapsort-algorithm" title="Link to this heading">#</a></h2>
@@ -795,26 +856,43 @@ table tr:hover {
 <span class="sd">    Perform heapsort on array A.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">build_max_heap</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">heap_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
         <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">max_heapify</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">heap_size</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">max_heapify</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">heap_size</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">A</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsorted array: </span><span class="si">{</span><span class="n">A</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">heap_sort</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sorted array: </span><span class="si">{</span><span class="n">A</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Unsorted array: [-1, -10, -5, 1, 5, 7, 0, -2, 10, -5, -2]
+Sorted array: [-10, -5, -5, -2, -2, -1, 0, 1, 5, 7, 10]
 </pre></div>
 </div>
 </div>
 </div>
-<figure class="align-default" id="id4">
+<figure class="align-default" id="id5">
 <img alt="Illustration of the heap sort process." class="mb-1" src="_images/heap_sort.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 8 </span><span class="caption-text">Illustration of the heap sort process.</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 8 </span><span class="caption-text">Illustration of the heap sort process.</span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
+<section id="animation-heap-sort">
+<h3>Animation Heap Sort<a class="headerlink" href="#animation-heap-sort" title="Link to this heading">#</a></h3>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQddnSHzY3bklJZ7WY_RBRF3QmFoJgqN2NO9FkNOD7PtBvvdv1OFsHXU2iBWaSkhEwr31IBw_xLF80q/embed?start=false&loop=false&delayms=5000" frameborder="0" width="800" height="479" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+</section>
 </section>
 <section id="quick-sort">
 <h2>Quick Sort<a class="headerlink" href="#quick-sort" title="Link to this heading">#</a></h2>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Quick Sort (in-place) - Time complexity: <span class="math notranslate nohighlight">\(\Theta(n \log n)\)</span> | Space complexity: <span class="math notranslate nohighlight">\(O(1)\)</span> | Worst case running time: <span class="math notranslate nohighlight">\(\Theta(n^2)\)</span></p>
-</div>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> Quick Sort (in-place) - Time complexity: <span class="math notranslate nohighlight">\(\Theta(n \log n)\)</span> | Space complexity: <span class="math notranslate nohighlight">\(O(1)\)</span> | Worst case running time: <span class="math notranslate nohighlight">\(\Theta(n^2)\)</span></p>
+</div></blockquote>
 <p>Quick Sort is a highly efficient sorting algorithm that uses the divide-and-conquer strategy. The algorithm works as follows:</p>
 <ul class="simple">
 <li><p>Choose a pivot element from the array.</p></li>
@@ -832,9 +910,7 @@ table tr:hover {
     <span class="n">x</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
     <span class="n">i</span> <span class="o">=</span> <span class="n">p</span> <span class="o">-</span> <span class="mi">1</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
-        <span class="k">if</span>
-
- <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">x</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">x</span><span class="p">:</span>
             <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
     <span class="n">A</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
@@ -849,14 +925,18 @@ table tr:hover {
         <span class="n">q</span> <span class="o">=</span> <span class="n">partition</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
         <span class="n">quicksort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">quicksort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">q</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">A</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsorted array: </span><span class="si">{</span><span class="n">A</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">sorted_A</span> <span class="o">=</span> <span class="n">quicksort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sorted array: </span><span class="si">{</span><span class="n">sorted_A</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>  <span class="n">File</span> <span class="o">&lt;</span><span class="n">tokenize</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">11</span>
-    <span class="n">A</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">x</span><span class="p">:</span>
-    <span class="o">^</span>
-<span class="ne">IndentationError</span>: unindent does not match any outer indentation level
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Unsorted array: [-1, -10, -5, 1, 5, 7, 0, -2, 10, -5, -2]
+Sorted array: [-10, -5, -5, -2, -2, -1, 0, 1, 5, 7, 10]
 </pre></div>
 </div>
 </div>
@@ -912,22 +992,38 @@ T(n) = 2T(n/2) + \Theta(n) \implies T(n) = \Theta(n \log n)
         <span class="n">q</span> <span class="o">=</span> <span class="n">randomized_partition</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
         <span class="n">randomized_quicksort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">randomized_quicksort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">q</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">A</span>
+        
+<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsorted array: </span><span class="si">{</span><span class="n">A</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">sorted_A</span> <span class="o">=</span> <span class="n">randomized_quicksort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sorted array: </span><span class="si">{</span><span class="n">sorted_A</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Unsorted array: [-1, -10, -5, 1, 5, 7, 0, -2, 10, -5, -2]
+Sorted array: [-10, -5, -5, -2, -2, -1, 0, 1, 5, 7, 10]
 </pre></div>
 </div>
 </div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>I recommend reading this <a class="reference external" href="https://qr.ae/psQO91">Quora discussion</a>, as it includes comments from one of the authors of the CLRS book, which we are using as a reference for this summary.</p>
-</div>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> I recommend reading this <a class="reference external" href="https://qr.ae/psQO91">Quora discussion</a>, as it includes comments from one of the authors of the CLRS book, which we are using as a reference for this summary.</p>
+</div></blockquote>
+<blockquote>
+<div><p><strong>Thomas Cormen</strong>: “Both the deterministic and randomized quicksort algorithms have the same best-case running times of  <span class="math notranslate nohighlight">\(O(n\log(n))\)</span> and the same worst-case running times of  <span class="math notranslate nohighlight">\(O(n^2)\)</span>. The difference is that with the deterministic algorithm, a particular input can elicit that worst-case behavior. With the randomized algorithm, however, no input can always elicit the worst-case behavior. The reason it matters is that, depending on how partitioning is implemented, an input that is already sorted–or almost sorted–can elicit the worst-case behavior in deterministic quicksort.”</p>
+</div></blockquote>
 </section>
+<section id="animation-quicksort">
+<h3>Animation QuickSort<a class="headerlink" href="#animation-quicksort" title="Link to this heading">#</a></h3>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSvQDVBesLdaM8BoM-hzFyfWgzphBYNd2RETlC5Di71PNZJ64LzywW5bb7djM91tc8l1D3jW1fOI95P/embed?start=false&loop=false&delayms=5000" frameborder="0" width="840" height="501" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe></section>
 </section>
 <section id="radix-sort">
 <h2>Radix Sort<a class="headerlink" href="#radix-sort" title="Link to this heading">#</a></h2>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Radix Sort - Time complexity: <span class="math notranslate nohighlight">\(\Theta(d \cdot (n + k))\)</span> | Space complexity: <span class="math notranslate nohighlight">\(O(n + k)\)</span></p>
-</div>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> Radix Sort - Time complexity: <span class="math notranslate nohighlight">\(\Theta(d \cdot (n + k))\)</span> | Space complexity: <span class="math notranslate nohighlight">\(O(n + k)\)</span></p>
+</div></blockquote>
 <p>Radix Sort is a non-comparative sorting algorithm that sorts numbers by processing individual digits. It operates by sorting the elements digit by digit, starting from the least significant digit (LSD) to the most significant digit (MSD). To achieve this, Radix Sort leverages a stable subroutine, such as Counting Sort, to sort the elements based on each digit. This ensures that the relative order of elements with equal digits is maintained, resulting in a stable sort.</p>
 <p>The key idea behind Radix Sort is to treat the elements as strings of digits and process each digit position independently. This approach can be highly efficient for sorting large numbers of small integers or fixed-length strings.</p>
 <div class="cell docutils container">
@@ -966,14 +1062,26 @@ T(n) = 2T(n/2) + \Theta(n) \implies T(n) = \Theta(n \log n)
     <span class="k">while</span> <span class="n">max1</span> <span class="o">//</span> <span class="n">exp</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">counting_sort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">exp</span><span class="p">)</span>
         <span class="n">exp</span> <span class="o">*=</span> <span class="mi">10</span>
+
+<span class="c1"># Example usage</span>
+<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="mi">170</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">802</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">66</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsorted array: </span><span class="si">{</span><span class="n">A</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">radix_sort</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sorted array: </span><span class="si">{</span><span class="n">A</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Unsorted array: [170, 45, 75, 90, 802, 24, 2, 66]
+Sorted array: [2, 24, 45, 66, 75, 90, 170, 802]
 </pre></div>
 </div>
 </div>
 </div>
-<figure class="align-default" id="id5">
+<figure class="align-default" id="id6">
 <img alt="Illustration of the radix sort process." class="mb-1" src="_images/radix_sort.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 9 </span><span class="caption-text">Illustration of the radix sort process.</span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 9 </span><span class="caption-text">Illustration of the radix sort process.</span><a class="headerlink" href="#id6" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -1084,11 +1192,11 @@ T(n) = 2T(n/2) + \Theta(n) \implies T(n) = \Theta(n \log n)
       </div>
     </a>
     <a class="right-next"
-       href="references.html"
+       href="dynamic-programming.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">References</p>
+        <p class="prev-next-title">Dynamic Programming</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1122,14 +1230,21 @@ T(n) = 2T(n/2) + \Theta(n) \implies T(n) = \Theta(n \log n)
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heap-sort">Heap Sort</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heaps">Heaps</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maintaining-the-heap-property">Maintaining the heap property</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-heap">Building a Heap</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#at-last-the-heapsort-algorithm">At Last, the Heapsort Algorithm</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-a-heap">Building a Heap</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#animation-maxheap">Animation MaxHeap</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#at-last-the-heapsort-algorithm">At Last, the Heapsort Algorithm</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#animation-heap-sort">Animation Heap Sort</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-sort">Quick Sort</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-of-quicksort">Performance of quicksort</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#worst-case-partitioning">Worst-case partitioning</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-case-partitioning">Best-case partitioning</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#balanced-partitioning">Balanced partitioning</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-randomized-version-of-quicksort">A randomized version of quicksort</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#animation-quicksort">Animation QuickSort</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#radix-sort">Radix Sort</a></li>

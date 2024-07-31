@@ -11,4 +11,19 @@ Demaine, E., Ku, J., and Solomon, J. (2020).
 \newblock MIT OpenCourseWare.
 \newblock Course Description: This course is an introduction to mathematical modeling of computational problems, as well as common algorithms, algorithmic paradigms, and data structures used to solve these problems. It emphasizes the relationship between algorithms and programming and introduces basic performance measures and analysis techniques.
 
+\bibitem[GeeksforGeeks, 2024]{geeksforgeeks_01knapsack}
+GeeksforGeeks (2024).
+\newblock 0-1 knapsack problem - dynamic programming.
+\newblock Accessed: 2024-07-31.
+
+\bibitem[NeetCode, 2024]{neetcode_advanced_algorithms}
+NeetCode (2024).
+\newblock Advanced algorithms course.
+\newblock Accessed: 2024-07-31.
+
+\bibitem[Stackademic, 2024]{stackademic_knapsack}
+Stackademic (2024).
+\newblock Knapsack problem: Dynamic programming solution.
+\newblock Accessed: 2024-07-31.
+
 \end{thebibliography}

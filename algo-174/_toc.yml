@@ -10,4 +10,5 @@ chapters:
 - file: comp-time-complexity
 - file: comp-time-complexity-cont
 - file: sorting
+- file: dynamic-programming
 - file: references

@@ -1197,6 +1197,11 @@ INPUT ./figures/radix_sort.png
 INPUT ./figures/radix_sort.png
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm
 INPUT /usr/local/texlive/2023/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm
+INPUT ./figures/knapsack-dp.png
+INPUT ./figures/knapsack-dp.png
+INPUT figures/knapsack-dp.png
+INPUT ./figures/knapsack-dp.png
+INPUT ./figures/knapsack-dp.png
 INPUT ./main.bbl
 INPUT main.bbl
 INPUT ./main.bbl

@@ -24,6 +24,26 @@ def knapsack_01_naive(capacity, weights, values):
     profit = 0
     return knapsack_01_helper(0, capacity, weights, values)
 
+def knapsack_dp(values, weights, capacity):
+    N, M = len(values), capacity # N (total number of items), M (total capacity)
+    dp = [[0] * (M + 1) for _ in range(N)]
+    
+    # Boundary conditions
+    for i in range(N):
+        dp[i][0] = 0
+    for c in range(M + 1):
+        if weights[0] <= c:
+            dp[0][c] = values[0]
+    
+    for i in range(N):
+        for c in range(M+1):
+            skip = dp[i - 1][c]
+            include = 0
+            if c - weights[i] >=0:
+                include = values[i] + dp[i - 1][c - weights[i]]
+            dp[i][c] = max(include, skip)
+    
+    print(dp)
 
 if __name__ == "__main__":
     # lst = [[3, 50, 60, 20, 100, 50, 120, 30], [1, 10, 500, 30]]
@@ -37,6 +57,8 @@ if __name__ == "__main__":
         profit = knapsack_01_naive(capacity, weights, values)
         print(f"\nOutput: {profit}")
         print(f"Correct Response: {response[idx]}\n")
+    
+    print(knapsack_dp(values=[6, 10, 12], weights=[1, 2, 3], capacity=5))
 
     # data = list(map(int, stdin.read().split()))
     # n, capacity = data[0:2]

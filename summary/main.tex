@@ -1827,7 +1827,7 @@ A binary search tree is a data structure where keys are stored in a manner that 
 
 \begin{quote}
     \setlength{\leftskip}{0.25cm}
-    $\textcolor{color2}{\Longrightarrow}$ The following section uses the book \cite{10.5555/1614191} as a reference.
+    $\textcolor{color2}{\Longrightarrow}$ The following section uses the book \cite{10.5555/1614191}, and the tutorials \cite{geeksforgeeks_01knapsack, neetcode_advanced_algorithms, stackademic_knapsack} as a reference.
 \end{quote}
 
 A dynamic-programming algorithm solves each subproblem \hlt{just once} and then saves its answer in a table, thereby avoiding the work of recomputing the answer every time it solves each subproblem. Dynamic programming applies when the subproblems overlap, that is, when subproblems share subsubproblems. In this context, a \textbf{divide-and-conquer} algorithm does \hlt{more work than necessary}, repeatedly solving the common subproblems. When developing a dynamic-programming algorithm, we follow a sequence of four steps:
@@ -1849,7 +1849,7 @@ A dynamic-programming algorithm solves each subproblem \hlt{just once} and then 
 
 \noindent \underline{\textit{Example}}: Imagine we are going to the supermarket, and we want to buy a selection of products to take with us to the park. We have only one backpack with a certain capacity, and we want to \hlt{maximize} the total value of the products we can fit into our backpack. The condition here is that we can only choose one product of each type.\\
 
-\noindent We enter a supermarket with a backpack that has a capacity of \( W = 50 \) units. There are \( n = 3 \) products available:
+\noindent We enter a supermarket with a backpack that has a capacity of \( m = 50 \) units. There are \( n = 3 \) products available:
 \begin{itemize}[itemsep=1pt, topsep=5pt]
     \item Product 1: cost \( c_1 = 60 \), weight \( w_1 = 10 \)
     \item Product 2: cost \( c_2 = 100 \), weight \( w_2 = 20 \)
@@ -1943,7 +1943,7 @@ Memoization is an optimization technique used to speed up algorithms by storing 
 
 \begin{quote}
     \setlength{\leftskip}{0.25cm}
-    $\textcolor{color2}{\Longrightarrow}$ The time complexity with memoization is \(O(n \cdot W)\), where \(n\) is the number of items and \(W\) is the capacity of the knapsack. This is because each subproblem \texttt{(level, capacity)} is solved at most once, leading to a polynomial time complexity.
+    $\textcolor{color2}{\Longrightarrow}$ The time complexity with memoization is \(O(n \cdot m)\), where \(n\) is the number of items and \(m\) is the capacity of the knapsack. This is because each subproblem \texttt{(level, capacity)} is solved at most once, leading to a polynomial time complexity.
 \end{quote}
 
 
@@ -1980,7 +1980,7 @@ Memoization is an optimization technique used to speed up algorithms by storing 
         \State \Return memo
         \EndFunction\\
         
-        \Function{knapsack\_naive}{$capacity, weights, values$} \Comment{\hlti{$O(n \cdot W)$}}
+        \Function{knapsack\_naive}{$capacity, weights, values$} \Comment{\hlti{$O(n \cdot m)$}}
             \State $memo \gets \Call{memoization}{capacity, weights, values}$
             \State \Return \Call{knapsack\_helper}{$0, capacity, weights, values, memo$}
         \EndFunction
@@ -1992,46 +1992,51 @@ Memoization is an optimization technique used to speed up algorithms by storing 
 
 \begin{quote}
     \setlength{\leftskip}{0.25cm}
-    $\textcolor{color2}{\Longrightarrow}$ Both the dynamic programming approach and the recursive memoization approach have time complexity of \hlt{$O(n \cdot W)$}
+    $\textcolor{color2}{\Longrightarrow}$ Both the dynamic programming approach and the recursive memoization approach have time complexity of \hlt{$O(n \cdot m)$}
 \end{quote}
 
-The pseudcode \ref*{algo:knapsack_dp} shows an approach which is more clever using an 2D array to compute our solution. This solution is usually referred to as the \hlt{true} dynamic programming approach to the 0/1 Knapsack problem offers several advantages over the naive recursive approach:
+The pseudcode \ref{algo:knapsack_dp} shows an approach which is more clever using an 2D array to compute our solution. This solution is usually referred to as the \hlt{true} dynamic programming approach to the 0/1 Knapsack problem offers several advantages over the naive recursive approach:
 
-\begin{itemize}
-    \item \textbf{Efficiency:} The naive recursive approach has an exponential time complexity \hlt{\(O(2^n)\)}, making it infeasible for large inputs. In contrast, the dynamic programming approach reduces the time complexity to \hlt{\(O(n \cdot W)\)}, where \(n\) is the number of items and \(W\) is the capacity of the knapsack.
+\begin{itemize}[itemsep=1pt, topsep=5pt]
+    \item \textbf{Efficiency:} The naive recursive approach has an exponential time complexity \hlt{\(O(2^n)\)}, making it infeasible for large inputs. In contrast, the dynamic programming approach reduces the time complexity to \hlt{\(O(n \cdot m)\)}, where \(n\) is the number of items and \(m\) is the capacity of the knapsack.
     \item \textbf{Avoids Redundant Calculations:} The dynamic programming approach stores intermediate results in a 2D table (memoization) to avoid recalculating the same subproblems multiple times. This significantly reduces the number of calculations required.
     \item \textbf{Iterative Solution:} Unlike the recursive approach, the dynamic programming approach is iterative and does not involve the overhead of function calls, making it more efficient in terms of memory usage and execution speed.
 \end{itemize}
 
-The table \ref*{fig:knapsack_dp} illustrates the dynamic programming table for a knapsack problem with weights [1, 2, 3], values [6, 10, 12], and capacity 5. In this table:
-\begin{itemize}
-    \item The rows represent the items (including a row for no items).
-    \item The columns represent the knapsack capacities from 0 to the maximum capacity.
-    \item Each cell \(dp[i][w]\) contains the maximum profit achievable with the first \(i\) items and a knapsack capacity \(w\).
+The table in Figure \ref{fig:01knapsack} depicts the dynamic programming table for a knapsack problem with weights [1, 2, 3], values [6, 10, 12], and a capacity of 5. In this table:
+\begin{itemize}[itemsep=1pt, topsep=5pt]
+    \item The rows represent the index of items, including a row for no items (index 0, 1, or 2).
+    \item The columns correspond to knapsack capacities ranging from 0 to the maximum capacity.
+    \item Each cell \(dp[i][w]\) shows the maximum profit that can be obtained using the first \(i\) items with a knapsack capacity of \(w\).
 \end{itemize}
+
+\begin{quote}
+    \setlength{\leftskip}{0.25cm}
+    $\textcolor{color2}{\Longrightarrow}$ For a step by step animation please refer to the following \href{https://docs.google.com/presentation/d/1MFxadjo6IOPm6Uh9uILxVhRI6qyjtzRjLMsHNQRhXPA/edit?usp=sharing}{link}.
+\end{quote}
 
 \begin{algorithm}
     \caption{0/1 Knapsack using Dynamic Programming}
     \begin{algorithmic}[1]
-        \Function{knapsack}{$values, weight, capacity$} \Comment{Time Complexity: \hlti{$O(n \cdot W)$} | Space Complexity: \hlti{$O(n \cdot W)$}}
+        \Function{knapsack}{$values, weight, capacity$} \Comment{Time Complexity: \hlti{$O(n \cdot m)$} | Space Complexity: \hlti{$O(n \cdot m)$}}
             \State $N \gets $ len($values$)
             \State $M \gets capacity$
             \Comment{A 2D array with $N$ rows and $M + 1$ columns, initialized with 0's}
             \State $dp \gets [ [0] * (M + 1) \text{ for } i \text{ in range }(N) ]$
             
             \Comment{Fill the first column to reduce \hlt{edge cases}}
-            \For{$i \gets 0$ \textbf{to} $N - 1$}
+            \For{$i \gets 0$ \textbf{to} $N$}
                 \State $dp[i][0] \gets 0$
             \EndFor
             \Comment{Fill the first row based on the first item's weight and value}
-            \For{$c \gets 0$ \textbf{to} $M$}
+            \For{$c \gets 0$ \textbf{to} $M + 1$}
                 \If{$weight[0] \leq c$}
                     \State $dp[0][c] \gets values[0]$
                 \EndIf
             \EndFor\\
 
-            \For{$i \gets 1$ \textbf{to} $N - 1$}
-                \For{$c \gets 1$ \textbf{to} $M$}
+            \For{$i \gets 1$ \textbf{to} $N$}
+                \For{$c \gets 1$ \textbf{to} $M + 1$}
                     \State $skip \gets dp[i-1][c]$
                     \State $include \gets 0$
                     \If{$c - weight[i] \geq 0$}
@@ -2048,27 +2053,15 @@ The table \ref*{fig:knapsack_dp} illustrates the dynamic programming table for a
 \end{algorithm}
 
 
-\begin{figure}[h!]
+\begin{figure}[ht]
     \centering
-    \begin{tikzpicture}
-      \matrix [matrix of math nodes, nodes in empty cells,
-      nodes={minimum width=1cm, minimum height=1cm, outer sep=0pt},
-      column sep=-\pgflinewidth, row sep=-\pgflinewidth,
-      row 1/.style={nodes={fill=black!20,minimum height=1cm}},
-      column 1/.style={nodes={fill=black!20,minimum width=1cm}}] (m) {
-        |[fill=black!20]| & 0 & 1 & 2 & 3 & 4 & 5 \\
-        0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-        1 & 0 & 6 & 6 & 6 & 6 & 6 \\
-        2 & 0 & 6 & 10 & 16 & 16 & 16 \\
-        3 & 0 & 6 & 10 & 16 & 18 & 22 \\
-      };
-    \end{tikzpicture}
-    \caption{Dynamic programming table for the 0/1 Knapsack problem with weights [1, 2, 3], values [6, 10, 12], and capacity 5. Each cell \(dp[i][w]\) represents the maximum profit for the first \(i\) items with a capacity \(w\).}
-    \label{fig:knapsack_dp}
-  \end{figure}
+    \includegraphics[width=0.5\linewidth]{figures/knapsack-dp.png}
+    \caption{Dynamic programming table for the 0/1 Knapsack problem with weights [1, 2, 3], values [6, 10, 12], and capacity of 5. Each cell $dp[i][m]$ represents the maximum profit for the first $i$ items with a capacity $m = 5$.}
+    \label{fig:01knapsack}
+\end{figure}
+
 
 \newpage
-
 \fontsize{8}{9}\selectfont
 \bibliography{ResearchPaperBib}
 
