@@ -388,7 +388,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#knapsack">0/1 Knapsack</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#algorithms">Algorithms</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-algorithm">Naive Algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-recursive-algorithm">Naive Recursive Algorithm</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#memoization-algorithm">Memoization Algorithm</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#key-concepts-of-memoization">Key Concepts of Memoization</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#steps-to-implement-memoization">Steps to Implement Memoization</a></li>
@@ -398,6 +398,17 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#animation-for-dp-approach">Animation for DP approach</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unbounded-knapsack">Unbounded Knapsack</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-statement">Problem Statement</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Algorithms</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-recursive-approach">Naive Recursive approach</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#memoization">Memoization</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Dynamic Programming</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#complexity-table">Complexity Table</a></li>
 </ul>
 </li>
 </ul>
@@ -444,9 +455,11 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(values = [6, 10, 12]\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(capacity = 5\)</span></p></li>
 </ul>
-<section id="naive-algorithm">
-<h3>Naive Algorithm<a class="headerlink" href="#naive-algorithm" title="Link to this heading">#</a></h3>
-<p>This algorithm has a time complexity of <span class="math notranslate nohighlight">\(O(2^n)\)</span>.</p>
+<section id="naive-recursive-algorithm">
+<h3>Naive Recursive Algorithm<a class="headerlink" href="#naive-recursive-algorithm" title="Link to this heading">#</a></h3>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> Time Complexity of <span class="math notranslate nohighlight">\(O(2^n)\)</span> | Space Complexity of <span class="math notranslate nohighlight">\(O(n)\)</span>, where <span class="math notranslate nohighlight">\(n\)</span> is the number of items</p>
+</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">knapsack_helper</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">capacity</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
@@ -456,14 +469,18 @@ document.write(`
     <span class="c1"># Exclude the item, as including it would exceed the capacity of our backpack.</span>
     <span class="k">if</span> <span class="n">weights</span><span class="p">[</span><span class="n">level</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">capacity</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">knapsack_helper</span><span class="p">(</span><span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">capacity</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
-    
-    <span class="n">profit_with</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">level</span><span class="p">]</span> <span class="o">+</span> <span class="n">knapsack_helper</span><span class="p">(</span><span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">capacity</span> <span class="o">-</span> <span class="n">weights</span><span class="p">[</span><span class="n">level</span><span class="p">],</span> <span class="n">weights</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+
+    <span class="n">profit_with</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">level</span><span class="p">]</span> <span class="o">+</span> <span class="n">knapsack_helper</span><span class="p">(</span>
+        <span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">capacity</span> <span class="o">-</span> <span class="n">weights</span><span class="p">[</span><span class="n">level</span><span class="p">],</span> <span class="n">weights</span><span class="p">,</span> <span class="n">values</span>
+    <span class="p">)</span>
     <span class="n">profit_without</span> <span class="o">=</span> <span class="n">knapsack_helper</span><span class="p">(</span><span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">capacity</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">profit_with</span><span class="p">,</span> <span class="n">profit_without</span><span class="p">)</span>
 
+
 <span class="k">def</span> <span class="nf">knapsack_naive</span><span class="p">(</span><span class="n">capacity</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">knapsack_helper</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">capacity</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+
 
 <span class="c1"># Example usage:</span>
 <span class="n">weights</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
@@ -482,6 +499,9 @@ document.write(`
 </section>
 <section id="memoization-algorithm">
 <h3>Memoization Algorithm<a class="headerlink" href="#memoization-algorithm" title="Link to this heading">#</a></h3>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> Time Complexity of <span class="math notranslate nohighlight">\(O(n \cdot W)\)</span> | Space Complexity of <span class="math notranslate nohighlight">\(O(n \cdot W)\)</span>, where <span class="math notranslate nohighlight">\(W\)</span> is the knapsack capacity and <span class="math notranslate nohighlight">\(n\)</span> the number of items</p>
+</div></blockquote>
 <p>Memoization is an optimization technique used primarily to speed up computer programs by storing the results of expensive function calls and reusing them when the same inputs occur again. This avoids the need to recompute results for the same inputs, significantly improving the time complexity in many cases.</p>
 <section id="key-concepts-of-memoization">
 <h4>Key Concepts of Memoization<a class="headerlink" href="#key-concepts-of-memoization" title="Link to this heading">#</a></h4>
@@ -510,24 +530,30 @@ Before performing any calculation, the function should check if the result is al
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">knapsack_helper_memo</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">capacity</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">memo</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">level</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
         <span class="k">return</span> <span class="mi">0</span>
-    
+
     <span class="k">if</span> <span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)</span> <span class="ow">in</span> <span class="n">memo</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">memo</span><span class="p">[(</span><span class="n">level</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)]</span>
-    
+
     <span class="c1"># Exclude the item, as including it would exceed the capacity of our backpack.</span>
     <span class="k">if</span> <span class="n">weights</span><span class="p">[</span><span class="n">level</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">capacity</span><span class="p">:</span>
-        <span class="n">memo</span><span class="p">[(</span><span class="n">level</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)]</span> <span class="o">=</span> <span class="n">knapsack_helper_memo</span><span class="p">(</span><span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">capacity</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">memo</span><span class="p">)</span>
+        <span class="n">memo</span><span class="p">[(</span><span class="n">level</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)]</span> <span class="o">=</span> <span class="n">knapsack_helper_memo</span><span class="p">(</span>
+            <span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">capacity</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">memo</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">memo</span><span class="p">[(</span><span class="n">level</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)]</span>
-    
-    <span class="n">profit_with</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">level</span><span class="p">]</span> <span class="o">+</span> <span class="n">knapsack_helper_memo</span><span class="p">(</span><span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">capacity</span> <span class="o">-</span> <span class="n">weights</span><span class="p">[</span><span class="n">level</span><span class="p">],</span> <span class="n">weights</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">memo</span><span class="p">)</span>
+
+    <span class="n">profit_with</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">level</span><span class="p">]</span> <span class="o">+</span> <span class="n">knapsack_helper_memo</span><span class="p">(</span>
+        <span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">capacity</span> <span class="o">-</span> <span class="n">weights</span><span class="p">[</span><span class="n">level</span><span class="p">],</span> <span class="n">weights</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">memo</span>
+    <span class="p">)</span>
     <span class="n">profit_without</span> <span class="o">=</span> <span class="n">knapsack_helper_memo</span><span class="p">(</span><span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">capacity</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">memo</span><span class="p">)</span>
-    
+
     <span class="n">memo</span><span class="p">[(</span><span class="n">level</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">profit_with</span><span class="p">,</span> <span class="n">profit_without</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">memo</span><span class="p">[(</span><span class="n">level</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)]</span>
+
 
 <span class="k">def</span> <span class="nf">knapsack_memo</span><span class="p">(</span><span class="n">capacity</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
     <span class="n">memo</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">return</span> <span class="n">knapsack_helper_memo</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">capacity</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">memo</span><span class="p">)</span>
+
 
 <span class="c1"># Example usage:</span>
 <span class="n">weights</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
@@ -547,6 +573,9 @@ Before performing any calculation, the function should check if the result is al
 </section>
 <section id="dynamic-programming-algorithm">
 <h3>Dynamic Programming Algorithm<a class="headerlink" href="#dynamic-programming-algorithm" title="Link to this heading">#</a></h3>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> Time Complexity of <span class="math notranslate nohighlight">\(O(n \cdot W)\)</span> | Space Complexity of <span class="math notranslate nohighlight">\(O(n \cdot W)\)</span>, where <span class="math notranslate nohighlight">\(W\)</span> is the knapsack capacity and <span class="math notranslate nohighlight">\(n\)</span> the number of items</p>
+</div></blockquote>
 <p>This approach uses a 2D array to compute the solution iteratively, also achieving a time complexity of <span class="math notranslate nohighlight">\(O(n \cdot m)\)</span>.</p>
 <p>The table in Figure below depicts the dynamic programming table for a knapsack problem with weights [1, 2, 3], values [6, 10, 12], and a capacity of 5. In this table:</p>
 <ul class="simple">
@@ -564,24 +593,25 @@ Before performing any calculation, the function should check if the result is al
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">knapsack_dp</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">capacity</span><span class="p">):</span>
     <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
-    <span class="n">M</span> <span class="o">=</span> <span class="n">capacity</span>
-    <span class="n">dp</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">M</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
-    
+    <span class="n">W</span> <span class="o">=</span> <span class="n">capacity</span>
+    <span class="n">dp</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">W</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
+
     <span class="c1"># Fill the first row based on the first item&#39;s weight and value</span>
-    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">W</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">weights</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">c</span><span class="p">:</span>
             <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    
+
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">M</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-            <span class="n">skip</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">c</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">W</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">skip</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">c</span><span class="p">]</span>
             <span class="n">include</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">if</span> <span class="n">c</span> <span class="o">&gt;=</span> <span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
-                <span class="n">include</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">c</span> <span class="o">-</span> <span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+                <span class="n">include</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">c</span> <span class="o">-</span> <span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
             <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">include</span><span class="p">,</span> <span class="n">skip</span><span class="p">)</span>
-    
+
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The dp arrray: &quot;</span><span class="p">,</span> <span class="n">dp</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">M</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">W</span><span class="p">]</span>
+
 
 <span class="c1"># Example usage:</span>
 <span class="n">weights</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
@@ -602,6 +632,249 @@ Answer:  22
 <h4>Animation for DP approach<a class="headerlink" href="#animation-for-dp-approach" title="Link to this heading">#</a></h4>
 <p>For a step by step animation on how the dynamic solution for the 0/1 knapsack problem please refer to the slides below</p>
 <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR7ODtgf40VbvLtTd61B5_RtEtYDdmOffHlm7gz5DZpag2O4QwODrz-VId1LZTaaP6wWy0KPSn8TyHX/embed?start=false&loop=false&delayms=5000" frameborder="0" width="820" height="500" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe></section>
+</section>
+</section>
+<section id="unbounded-knapsack">
+<h2>Unbounded Knapsack<a class="headerlink" href="#unbounded-knapsack" title="Link to this heading">#</a></h2>
+<p>The unbounded knapsack problem is a variation of the classic 0/1 knapsack problem where you can use each item an <span style="background-color: #F9F9E0;">unlimited number of times</span>.</p>
+<p>Given a set of items, each with a weight and a value, the goal is to determine the maximum value that can be obtained by putting items into a knapsack with a given capacity, with the additional constraint that an item can be chosen multiple times.</p>
+<section id="problem-statement">
+<h3>Problem Statement<a class="headerlink" href="#problem-statement" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Input</strong>:</p>
+<ul>
+<li><p>A list of item weights: <span class="math notranslate nohighlight">\(weights = [w_1, w_2, \ldots, w_n]\)</span></p></li>
+<li><p>A list of item values: <span class="math notranslate nohighlight">\(values = [v_1, v_2, \ldots, v_n]\)</span></p></li>
+<li><p>The capacity of the knapsack: <span class="math notranslate nohighlight">\(capacity\)</span></p></li>
+</ul>
+</li>
+<li><p><strong>Output</strong>:</p>
+<ul>
+<li><p>The maximum value that can be achieved with the given capacity, allowing multiple occurrences of each item.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id3">
+<h3>Algorithms<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>Let’s consider an example with the following inputs:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(weights = [1, 2, 3]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(values = [6, 10, 12]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(capacity = 5\)</span></p></li>
+</ul>
+<p>We need to find the maximum value that can be achieved with a knapsack capacity of <code class="docutils literal notranslate"><span class="pre">5</span></code> using the items multiple times.</p>
+<section id="naive-recursive-approach">
+<h4>Naive Recursive approach<a class="headerlink" href="#naive-recursive-approach" title="Link to this heading">#</a></h4>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> Time Complexity of <span class="math notranslate nohighlight">\(O(2^n)\)</span> | Space Complexity of <span class="math notranslate nohighlight">\(O(n \cdot W)\)</span>, where <span class="math notranslate nohighlight">\(W\)</span> is the knapsack capacity and <span class="math notranslate nohighlight">\(n\)</span> the number of items</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">unbound_knapsack</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">capacity</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">level</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="ow">or</span> <span class="n">capacity</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="n">weights</span><span class="p">[</span><span class="n">level</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">capacity</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">unbound_knapsack</span><span class="p">(</span><span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)</span>
+
+    <span class="c1"># We&#39;re deciding to add the element [0]</span>
+    <span class="n">profit_with</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">level</span><span class="p">]</span> <span class="o">+</span> <span class="n">unbound_knapsack</span><span class="p">(</span>
+        <span class="n">level</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">capacity</span> <span class="o">-</span> <span class="n">weights</span><span class="p">[</span><span class="n">level</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="c1"># We&#39;re deciding to NOT add the element [0]</span>
+    <span class="n">profit_without</span> <span class="o">=</span> <span class="n">unbound_knapsack</span><span class="p">(</span><span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)</span>
+
+    <span class="c1"># Choose which one retrieves the biggest value</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">profit_with</span><span class="p">,</span> <span class="n">profit_without</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">unbound_knapsack_helper</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">capacity</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">unbound_knapsack</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="n">values</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span> <span class="n">capacity</span><span class="o">=</span><span class="n">capacity</span><span class="p">)</span>
+
+
+<span class="c1"># Example usage:</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+<span class="n">capacity</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Answer: &quot;</span><span class="p">,</span> <span class="n">unbound_knapsack_helper</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">capacity</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Answer:  30
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="memoization">
+<h4>Memoization<a class="headerlink" href="#memoization" title="Link to this heading">#</a></h4>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> Time Complexity of <span class="math notranslate nohighlight">\(O(n \cdot W)\)</span> | Space Complexity of <span class="math notranslate nohighlight">\(O(n \cdot W)\)</span>, where <span class="math notranslate nohighlight">\(W\)</span> is the knapsack capacity and <span class="math notranslate nohighlight">\(n\)</span> the number of items</p>
+</div></blockquote>
+<p>As explained before, memoization can help us to optimize our problem. Let’s apply it to our unbound knapsack recursive algorithm.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">unbound_knapsack_memo</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">capacity</span><span class="p">,</span> <span class="n">memo</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">level</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="ow">or</span> <span class="n">capacity</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)</span> <span class="ow">in</span> <span class="n">memo</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">memo</span><span class="p">[(</span><span class="n">level</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)]</span>
+
+    <span class="k">if</span> <span class="n">weights</span><span class="p">[</span><span class="n">level</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">capacity</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">unbound_knapsack_memo</span><span class="p">(</span><span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">capacity</span><span class="p">,</span> <span class="n">memo</span><span class="p">)</span>
+
+    <span class="c1"># We&#39;re deciding to add the element [0]</span>
+    <span class="n">profit_with</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">level</span><span class="p">]</span> <span class="o">+</span> <span class="n">unbound_knapsack_memo</span><span class="p">(</span>
+        <span class="n">level</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">capacity</span> <span class="o">-</span> <span class="n">weights</span><span class="p">[</span><span class="n">level</span><span class="p">],</span> <span class="n">memo</span>
+    <span class="p">)</span>
+
+    <span class="c1"># We&#39;re deciding to NOT add the element [0]</span>
+    <span class="n">profit_without</span> <span class="o">=</span> <span class="n">unbound_knapsack_memo</span><span class="p">(</span><span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">capacity</span><span class="p">,</span> <span class="n">memo</span><span class="p">)</span>
+
+    <span class="c1"># Choose which one retrieves the biggest value</span>
+    <span class="n">profit</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">profit_with</span><span class="p">,</span> <span class="n">profit_without</span><span class="p">)</span>
+
+    <span class="n">memo</span><span class="p">[(</span><span class="n">level</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)]</span> <span class="o">=</span> <span class="n">profit</span>
+    <span class="k">return</span> <span class="n">profit</span>
+
+
+<span class="k">def</span> <span class="nf">unbound_knapsack_memo_helper</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">capacity</span><span class="p">):</span>
+    <span class="n">memo</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">return</span> <span class="n">unbound_knapsack_memo</span><span class="p">(</span>
+        <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="n">values</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span> <span class="n">capacity</span><span class="o">=</span><span class="n">capacity</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="n">memo</span>
+    <span class="p">)</span>
+
+
+<span class="c1"># Example usage:</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+<span class="n">capacity</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Answer: &quot;</span><span class="p">,</span> <span class="n">unbound_knapsack_memo_helper</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">capacity</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Answer:  30
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id4">
+<h4>Dynamic Programming<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\textcolor{#FFC0D9}{\Longrightarrow}\)</span> Time Complexity of <span class="math notranslate nohighlight">\(O(n \cdot W)\)</span> | Space Complexity of <span class="math notranslate nohighlight">\(O(W)\)</span>, where <span class="math notranslate nohighlight">\(W\)</span> is the knapsack capacity and <span class="math notranslate nohighlight">\(n\)</span> the number of items</p>
+</div></blockquote>
+<p>To solve the unbounded knapsack problem, dynamic programming is often used. The idea is to build a solution iteratively using previously computed results.</p>
+<ol class="arabic simple">
+<li><p><strong>Initialization</strong>:</p>
+<ul class="simple">
+<li><p>Create a table <code class="docutils literal notranslate"><span class="pre">dp</span></code> where <code class="docutils literal notranslate"><span class="pre">dp[i]</span></code> will store the maximum value achievable with knapsack capacity <code class="docutils literal notranslate"><span class="pre">i</span></code>.</p></li>
+</ul>
+</li>
+<li><p><strong>Iterative Solution</strong>:</p>
+<ul class="simple">
+<li><p>Iterate through all capacities from <code class="docutils literal notranslate"><span class="pre">0</span></code> to <code class="docutils literal notranslate"><span class="pre">capacity</span></code>.</p></li>
+<li><p>For each capacity, iterate through all items to check if it can be included in the current capacity. Update the <code class="docutils literal notranslate"><span class="pre">dp</span></code> table accordingly.</p></li>
+</ul>
+</li>
+</ol>
+<p>The dynamic programming formula for the unbounded knapsack problem is:</p>
+<div class="math notranslate nohighlight">
+\[ dp[i] = \max(dp[i], dp[i - w_j] + v_j) \]</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">w_j</span></code> is the weight of the item and <code class="docutils literal notranslate"><span class="pre">v_j</span></code> is the value of the item.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">unbound_knapsack_dp</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">capacity</span><span class="p">):</span>
+    <span class="n">N</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">),</span> <span class="n">capacity</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">dp</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">W</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
+
+  <span class="c1"># Initialize for boundary conditions</span>
+    <span class="k">for</span> <span class="n">_capacity</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">W</span><span class="p">):</span>
+        <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">_capacity</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">_capacity</span> <span class="o">//</span> <span class="n">weights</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">_capacity</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">W</span><span class="p">):</span>
+            <span class="n">profit_without</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">_capacity</span><span class="p">]</span>  <span class="c1"># profit without including item i</span>
+            <span class="n">profit_with</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="n">_capacity</span> <span class="o">&gt;=</span> <span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>  <span class="c1"># profit including item i</span>
+                <span class="n">profit_with</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">_capacity</span> <span class="o">-</span> <span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+            <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">_capacity</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">profit_without</span><span class="p">,</span> <span class="n">profit_with</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The dp array: </span><span class="si">{</span><span class="n">dp</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">W</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+
+<span class="c1"># Example usage:</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+<span class="n">capacity</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Answer: &quot;</span><span class="p">,</span> <span class="n">unbound_knapsack_dp</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">capacity</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The dp array: [[0, 6, 12, 18, 24, 30], [0, 6, 12, 18, 24, 30], [0, 6, 12, 18, 24, 30]]
+Answer:  30
+</pre></div>
+</div>
+</div>
+</div>
+<style>
+table tr:hover {
+    background-color: #FFC0D9 !important;
+}
+</style>
+</section>
+</section>
+<section id="complexity-table">
+<h3>Complexity Table<a class="headerlink" href="#complexity-table" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Knapsack Type</p></th>
+<th class="head"><p>Solution Type</p></th>
+<th class="head"><p>Time Complexity</p></th>
+<th class="head"><p>Space Complexity</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0/1 Knapsack</p></td>
+<td><p>Recursive Solution</p></td>
+<td><p><span class="math notranslate nohighlight">\(O(2^n)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(O(n)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>0/1 Knapsack</p></td>
+<td><p>Memoization Recursive Solution</p></td>
+<td><p><span class="math notranslate nohighlight">\(O(n \cdot W)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(O(n \cdot W)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>0/1 Knapsack</p></td>
+<td><p>DP Solution</p></td>
+<td><p><span class="math notranslate nohighlight">\(O(n \cdot W)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(O(n \cdot W)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Unbounded Knapsack</p></td>
+<td><p>Recursive Solution</p></td>
+<td><p><span class="math notranslate nohighlight">\(O(2^n)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(O(n)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Unbounded Knapsack</p></td>
+<td><p>Memoization Recursive Solution</p></td>
+<td><p><span class="math notranslate nohighlight">\(O(n \cdot W)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(O(n \cdot W)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Unbounded Knapsack</p></td>
+<td><p>DP Solution</p></td>
+<td><p><span class="math notranslate nohighlight">\(O(n \cdot W)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(O(W)\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
 </section>
 </section>
@@ -672,7 +945,7 @@ Answer:  22
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#knapsack">0/1 Knapsack</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#algorithms">Algorithms</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-algorithm">Naive Algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-recursive-algorithm">Naive Recursive Algorithm</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#memoization-algorithm">Memoization Algorithm</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#key-concepts-of-memoization">Key Concepts of Memoization</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#steps-to-implement-memoization">Steps to Implement Memoization</a></li>
@@ -682,6 +955,17 @@ Answer:  22
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#animation-for-dp-approach">Animation for DP approach</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unbounded-knapsack">Unbounded Knapsack</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-statement">Problem Statement</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Algorithms</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-recursive-approach">Naive Recursive approach</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#memoization">Memoization</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Dynamic Programming</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#complexity-table">Complexity Table</a></li>
 </ul>
 </li>
 </ul>
