@@ -464,14 +464,154 @@ This problem aims to find the length of the longest common subsequence between t
 `problems/practice_exercises/22_longest_com_subsequence.py`
 
 
-## 1 - 
+## 23 - Car Fueling (UCSD)
 
 ### *Problem Statement*:
 
+Compute the minimum number of gas tank refills needed to travel from one city to another.
+
+**Input:**
+- An integer \( d \) representing the total distance between the cities.
+- An integer \( m \) representing the maximum distance a car can travel on a full tank.
+- An integer \( n \) representing the number of gas stations along the way.
+- A sequence of integers \( \text{stop}_1, \text{stop}_2, \ldots, \text{stop}_n \) representing the distances of the gas stations from the starting point, in increasing order.
+
+**Output:**
+- The minimum number of refills needed to travel from the starting city to the destination.
+- If it is not possible to reach the destination, output \(-1\).
+
+### *Input Format*:
+- The first line contains an integer \( d \).
+- The second line contains an integer \( m \).
+- The third line specifies an integer \( n \).
+- The last line contains integers \( \text{stop}_1, \text{stop}_2, \ldots, \text{stop}_n \).
+
+### *Output Format*:
+- The minimum number of refills needed.
+- If it is not possible to reach the destination, output \(-1\).
+
+### *Constraints*:
+- \( 1 \leq d \leq 10^5 \)
+- \( 1 \leq m \leq 400 \)
+- \( 1 \leq n \leq 300 \)
+- \( 0 < \text{stop}_1 < \text{stop}_2 < \cdots < \text{stop}_n < d \)
+
+### *Example*:
+
+**Input:**
+```
+950
+400
+4
+200 375 550 750
+```
+
+**Output:**
+```
+2
+```
+
+**Explanation**:
+- The total distance is 950 miles.
+- The car can travel a maximum of 400 miles on a full tank.
+- There are 4 gas stations at distances 200, 375, 550, and 750 miles.
+- The car needs to refill at 200 miles and 550 miles to reach the destination.
+
 ### *Path*:
 
-`problems/practice_exercises/XXXX.py`
+`problems/practice_exercises/23_car_fueling.py`
 
+## 24 - Maximum Advertisement Revenue (UCSD)
+
+### *Problem Statement*:
+
+Find the maximum dot product of two sequences of numbers.
+
+You have \( n = 3 \) advertisement slots on your popular Internet page and you want to sell them to advertisers. They expect, respectively, \( clicks1 = 10 \), \( clicks2 = 20 \), and \( clicks3 = 30 \) clicks per day. You found three advertisers willing to pay \( price1 = \$2 \), \( price2 = \$3 \), and \( price3 = \$5 \) per click. How would you pair the slots and advertisers to maximize the revenue? For example, \( 10 \cdot 5 + 20 \cdot 2 + 30 \cdot 3 = 180 \) gives a revenue of 180 dollars, while \( 10 \cdot 3 + 20 \cdot 5 + 30 \cdot 2 = 190 \) gives a revenue of 190 dollars.
+
+### *Input*:
+- Two sequences of \( n \) positive integers: \( price1, price2, \ldots, price_n \) and \( clicks1, clicks2, \ldots, clicks_n \).
+
+### *Output*:
+- The maximum value of \( price1 \cdot c1 + price2 \cdot c2 + \ldots + price_n \cdot c_n \), where \( c1, c2, \ldots, c_n \) is a permutation of \( clicks1, clicks2, \ldots, clicks_n \).
+
+### *Input Format*:
+- The first line contains an integer \( n \).
+- The second line contains a sequence of integers \( price1, price2, \ldots, price_n \).
+- The third line contains a sequence of integers \( clicks1, clicks2, \ldots, clicks_n \).
+
+### *Output Format*:
+- Output the maximum value of \( (price1 \cdot c1 + price2 \cdot c2 + \ldots + price_n \cdot c_n) \), where \( c1, c2, \ldots, c_n \) is a permutation of \( clicks1, clicks2, \ldots, clicks_n \).
+
+### *Constraints*:
+- \( 1 \leq n \leq 10^3 \)
+- \( 0 \leq price_i, clicks_i \leq 10^5 \) for all \( 1 \leq i \leq n \).
+
+### *Example*:
+
+**Input:**
+```
+3
+1 3 5
+2 4 6
+```
+
+**Output:**
+```
+44
+```
+
+### *Path*:
+
+`problems/practice_exercises/24_maximum_advertisement_revenue.py`
+
+
+Here is the markdown code formatted as per the specified format:
+
+## 25 - Collecting Signatures (UCSD)
+
+### *Problem Statement*:
+
+Find the minimum number of points needed to cover all given segments on a line.
+
+You are responsible for collecting signatures from all tenants in a building. For each tenant, you know a period of time when he or she is at home. You would like to collect all signatures by visiting the building as few times as possible. For simplicity, we assume that when you enter the building, you instantly collect the signatures of all tenants that are in the building at that time.
+
+### *Input*:
+- A sequence of \( n \) segments \([l_1, r_1], ..., [l_n, r_n]\) on a line.
+
+### *Output*:
+- A set of points of minimum size such that each segment \([l_i, r_i]\) contains a point, i.e., there exists a point \( x \) from this set such that \( l_i \leq x \leq r_i \).
+
+### *Input Format*:
+- The first line of the input contains the number \( n \) of segments.
+- Each of the following \( n \) lines contains two integers \( l_i \) and \( r_i \) (separated by a space) defining the coordinates of endpoints of the \( i \)-th segment.
+
+### *Output Format*:
+- The minimum number \( k \) of points on the first line and the integer coordinates of \( k \) points (separated by spaces) on the second line. You can output the points in any order. If there are multiple such sets of points, you can output any of them.
+
+### *Constraints*:
+- \( 1 \leq n \leq 100 \)
+- \( 0 \leq l_i \leq r_i \leq 10^9 \) for all \( i \).
+
+### *Example*:
+
+**Input:**
+```
+3
+1 3
+2 5
+3 6
+```
+
+**Output:**
+```
+1
+3
+```
+
+### *Path*:
+
+`problems/practice_exercises/25_collecting_signatures.py`
 
 # References:
 
