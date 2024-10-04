@@ -82,3 +82,11 @@ ipython_config.py
 
 # pipenv
 .Pipfile.lock
+
+# Ignore Jupyter Book build output
+algo-174/_build/*
+algo-174/_site/
+algo-174/jupyter_execute/
+**/.ipynb_checkpoints
+**/__pycache__/
+**/*.pyc
