@@ -1,7 +1,7 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
 
-title: "A Not-Too-Short, Not-Quite-Long Summary of Algorithms"
+title: "A Not-Too-Short Summary of Algorithms"
 author: "Igor L.R. Azevedo"
 logo: logo.png
 

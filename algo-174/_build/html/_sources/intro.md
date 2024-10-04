@@ -1,4 +1,4 @@
-# A Not-Too-Short, Not-Quite-Long Summary of *Algorithms*
+# A Not-Too-Short Summary of *Algorithms*
 
 **Author**: Igor L.R. Azevedo - *The University of Tokyo & University of Brasilia*
 
