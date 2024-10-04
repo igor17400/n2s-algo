@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex main"] 1722398572 "main.aux" "main.bbl" "main" 1722398776 0
+["bibtex main"] 1727945117 "main.aux" "main.bbl" "main" 1728025585 0
   "./ResearchPaperBib.bib" 1722398557 2560 8c1deec4be49e053d4ac70f9bf635226 ""
   "/usr/local/texlive/2023/texmf-dist/bibtex/bst/base/apalike.bst" 1292289607 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "main.aux" 1722398776 24307 77ccc61e73ce12d4d179096004a20394 "pdflatex"
+  "main.aux" 1728025584 24307 77ccc61e73ce12d4d179096004a20394 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1722398770 "/Users/igorlimarochaazevedo/Programming/Algorithms/algorithms-174/summary/main.tex" "main.pdf" "main" 1722398776 0
-  "/Users/igorlimarochaazevedo/Programming/Algorithms/algorithms-174/summary/main.tex" 1722398769 103229 c6403beb20da3376ecca5f3e269278de ""
+["pdflatex"] 1728025577 "/Users/igorlimarochaazevedo/Programming/Algorithms/algorithms-174/summary/main.tex" "main.pdf" "main" 1728025585 0
+  "/Users/igorlimarochaazevedo/Programming/Algorithms/algorithms-174/summary/main.tex" 1728025576 103197 fc15fd14fdc9c2faaed951c0bd9b4528 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -248,11 +248,11 @@
   "figures/radix_sort.png" 1721092404 49952 42fb4b95c2c97feffd1a5ef3461f1f37 ""
   "figures/recursive_tree.png" 1721092404 79507 4af75e6d11c57b57b3bd224694a60db1 ""
   "figures/recursive_tree_example.png" 1721092404 103638 e065673a2da6fe17d72fb53c519bacfd ""
-  "main.aux" 1722398776 24307 77ccc61e73ce12d4d179096004a20394 "pdflatex"
-  "main.bbl" 1722398572 1257 83759b470556a2ccb5cba7914a963049 "bibtex main"
-  "main.out" 1722398776 10863 98d5e1a32d6525a1a7d0151298dac30d "pdflatex"
-  "main.tex" 1722398769 103229 c6403beb20da3376ecca5f3e269278de ""
-  "main.toc" 1722398776 5980 7cc705ad34d5912beae76fa68410bdf0 "pdflatex"
+  "main.aux" 1728025584 24307 77ccc61e73ce12d4d179096004a20394 "pdflatex"
+  "main.bbl" 1727945117 1257 83759b470556a2ccb5cba7914a963049 "bibtex main"
+  "main.out" 1728025584 10863 98d5e1a32d6525a1a7d0151298dac30d "pdflatex"
+  "main.tex" 1728025576 103197 fc15fd14fdc9c2faaed951c0bd9b4528 ""
+  "main.toc" 1728025584 5980 7cc705ad34d5912beae76fa68410bdf0 "pdflatex"
   (generated)
   "main.aux"
   "main.log"

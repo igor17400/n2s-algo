@@ -7,7 +7,7 @@ Segment = namedtuple("Segment", "start end")
 def optimal_points(segments):
     points = []
 
-    # Sort segments by their end points
+    # Sort segments by their end points 
     segments.sort(key=lambda x: x.end)
 
     current_point = None
