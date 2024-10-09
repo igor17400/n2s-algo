@@ -21,7 +21,7 @@ bibtex_bibfiles:
 
 # Information about where the book exists on the web
 repository:
-  url: https://github.com/executablebooks/jupyter-book  # Online location of your book
+  url: https://github.com/igor17400/algorithms-174  # Online location of your book
   path_to_book: docs  # Optional path to your book, relative to the repository root
   branch: master  # Which branch of the repository should be used when creating links (optional)
 
@@ -32,7 +32,11 @@ html:
   use_repository_button: true
 
 sphinx:
-  extra_extensions:
-    - sphinx_proof
+  recursive_update: true
+  html_favicon: favicon.ico
   config:
     mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+    html_js_files:
+      - "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"
+  extra_extensions:
+    - sphinx_proof
