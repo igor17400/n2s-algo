@@ -840,6 +840,214 @@ The two inversions are:
 
 `problems/practice_exercises/30_number_of_inversions.py`
 
+## 31 - Money Change Again (Dynamic Programming - UCSD)
+
+### *Problem Statement*:
+Given a value `money`, compute the minimum number of coins needed to change the given value into coins with denominations 1, 3, and 4.
+
+### *Input*:
+- An integer `money` representing the value to be changed.
+
+### *Output*:
+- The minimum number of coins with denominations 1, 3, and 4 that change `money`.
+
+### *Input Format*:
+- A single integer representing the value `money`.
+
+### *Output Format*:
+- A single integer representing the minimum number of coins required.
+
+### *Constraints*:
+- $1 \leq \text{money} \leq 1000$.
+
+### *Example*:
+
+**Input:**
+```
+34
+```
+
+**Output:**
+```
+9
+```
+
+**Explanation:**  
+34 can be changed using nine coins: $3 + 3 + 4 + 4 + 4 + 4 + 4 + 4 + 4$.
+
+### *Approach*:
+To solve this problem, we will use dynamic programming. We define an array `min_coins` where `min_coins[i]` stores the minimum number of coins required to make change for the amount `i`. We initialize the base case `min_coins[0] = 0` since zero coins are needed to make the amount zero.
+
+For each value from `1` to `money`, we find the minimum number of coins by checking the denominations 1, 3, and 4 and updating the `min_coins` array. The recurrence relation used is:
+
+$$
+\text{min\_coins}[i] = \min(\text{min\_coins}[i - c] + 1) \quad \text{for each } c \in \{1, 3, 4\}
+$$
+
+### *Path*:
+`problems/dynamic_programming/31_money_change_again.py`
+
+## 32 - Primitive Calculator (Dynamic Programming - UCSD)
+
+### *Problem Statement*:
+Given a positive integer `n`, find the minimum number of operations needed to reach `n` starting from `1` using only three operations:
+- Add 1 to the current number.
+- Multiply the current number by 2.
+- Multiply the current number by 3.
+
+### *Input*:
+- A single integer `n` representing the target number.
+
+### *Output*:
+1. The minimum number of operations required to get from 1 to `n`.
+2. A sequence of intermediate numbers starting from `1` and ending at `n` using the minimum number of operations.
+
+### *Input Format*:
+- A single positive integer `n`.
+
+### *Output Format*:
+- The first line should contain an integer representing the minimum number of operations required.
+- The second line should contain a sequence of positive integers starting from `1` and ending at `n` such that each integer is either:
+  - The previous integer plus 1,
+  - Twice the previous integer,
+  - Three times the previous integer.
+
+### *Constraints*:
+- $1 \leq n \leq 10^6$.
+
+### *Example*:
+
+**Input:**
+```
+96234
+```
+
+**Output:**
+```
+14
+1 3 9 10 11 22 66 198 594 1782 5346 16038 16039 32078 96234
+```
+
+**Explanation:**  
+The optimal sequence involves 14 operations starting from `1` and applying the allowed operations to reach `96234`. One possible sequence is `1, 3, 9, 10, 11, 22, 66, 198, 594, 1782, 5346, 16038, 16039, 32078, 96234`.
+
+### *Approach*:
+To solve this problem efficiently, we will use dynamic programming to compute the minimum number of operations and backtrack to determine the sequence of operations. We'll create an array `min_ops` where `min_ops[i]` stores the minimum number of operations needed to reach `i` from `1`. For each number, we'll evaluate the three possible operations and keep track of the optimal path.
+
+### *Path*:
+`problems/dynamic_programming/32_primitive_calculator.py`
+
+## 33 - Edit Distance (Dynamic Programming - UCSD)
+
+### *Problem Statement*:
+Compute the **edit distance** between two strings. The **edit distance** is defined as the minimum number of single-symbol insertions, deletions, and substitutions required to transform one string into the other.
+
+### *Input*:
+- Two strings consisting of lower-case Latin letters, each provided on a separate line.
+
+### *Output*:
+- The minimum number of single-symbol insertions, deletions, and substitutions required to transform one string into the other.
+
+### *Example*:
+
+**Input:**
+```
+short
+ports
+```
+
+**Output:**
+```
+3
+```
+
+**Explanation:**  
+The second string can be obtained from the first one by deleting 's', substituting 'h' for 'p', and inserting 's'.  
+The alignment of operations is:
+
+```
+short
+p o r t s
+```
+
+### *Approach*:
+To solve this problem, we will use **dynamic programming**. We create a 2D array `dp` where `dp[i][j]` represents the edit distance between the first `i` characters of the first string and the first `j` characters of the second string.  
+The recurrence relation used is:
+
+\[
+dp[i][j] = 
+\begin{cases} 
+dp[i-1][j-1] & \text{if } s1[i-1] = s2[j-1] \\
+1 + \min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) & \text{if } s1[i-1] \neq s2[j-1}
+\end{cases}
+\]
+
+Where:
+- `dp[i-1][j]` represents a **deletion**,
+- `dp[i][j-1]` represents an **insertion**,
+- `dp[i-1][j-1]` represents a **substitution**.
+
+### *Path*:
+`problems/dynamic_programming/33_edit_distance.py`
+
+## 34 - Longest Common Subsequence of Two Sequences (Dynamic Programming - UCSD)
+
+### *Problem Statement*:
+Compute the maximum length of a common subsequence between two sequences. The **Longest Common Subsequence (LCS)** problem is defined as finding the longest subsequence common to both sequences, where a **subsequence** is a sequence derived by deleting zero or more elements from the original sequence without changing the order of the remaining elements.
+
+### *Input*:
+- Two sequences `A = (a1, a2, ..., an)` and `B = (b1, b2, ..., bm)`.
+
+### *Output*:
+- The maximum length of a common subsequence.
+
+### *Input Format*:
+1. The first line contains an integer `n`, the length of the first sequence.
+2. The second line contains `n` integers representing the elements of the first sequence.
+3. The third line contains an integer `m`, the length of the second sequence.
+4. The fourth line contains `m` integers representing the elements of the second sequence.
+
+### *Output Format*:
+- A single integer `p` representing the length of the longest common subsequence.
+
+### *Constraints*:
+- $1 \leq n, m \leq 100$.
+- Each element of the sequences is a positive integer.
+
+### *Example*:
+
+**Input:**
+```
+5
+7 2 9 3 1
+7
+2 8 1 3 9 7
+```
+
+**Output:**
+```
+3
+```
+
+**Explanation:**  
+The longest common subsequence between the two sequences is `[2, 3, 7]` with length 3.
+
+### *Approach*:
+We will use **dynamic programming** to solve this problem efficiently. We define a 2D array `dp` where `dp[i][j]` represents the length of the longest common subsequence between the first `i` elements of sequence `A` and the first `j` elements of sequence `B`.  
+The recurrence relation used is:
+
+\[
+dp[i][j] = 
+\begin{cases} 
+dp[i-1][j-1] + 1 & \text{if } a_{i} = b_{j} \\
+\max(dp[i-1][j], dp[i][j-1]) & \text{if } a_{i} \neq b_{j}
+\end{cases}
+\]
+
+### *Path*:
+`problems/dynamic_programming/34_longest_common_subsequence.py`
+
+
 # References:
 
 - https://www.coursera.org/specializations/data-structures-algorithms
