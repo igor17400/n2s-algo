@@ -1047,6 +1047,91 @@ dp[i-1][j-1] + 1 & \text{if } a_{i} = b_{j} \\
 ### *Path*:
 `problems/dynamic_programming/34_longest_common_subsequence.py`
 
+## 35 - Maximum Amount of Gold (Dynamic Programming - UCSD)
+
+### *Problem Statement*:
+Given a set of gold bars of various weights and a backpack that can hold at most W pounds, determine the maximum amount of gold that can be placed into the backpack. This is a variation of the classic 0/1 Knapsack problem.
+
+### *Input*:
+- An integer W representing the capacity of the backpack.
+- An integer n representing the number of gold bars.
+- A sequence of n integers w1, ..., wn representing the weights of the gold bars.
+
+### *Output*:
+- The maximum total weight of gold bars that fit into a backpack of capacity W.
+
+### *Input Format*:
+1. The first line contains two integers W and n, separated by a space.
+2. The second line contains n integers w1, ..., wn, separated by spaces, representing the weights of the gold bars.
+
+### *Output Format*:
+- A single integer representing the maximum weight of gold that fits into the backpack.
+
+### *Constraints*:
+- $1 \leq W \leq 10^4$
+- $1 \leq n \leq 300$
+- $0 \leq w_1, ..., w_n \leq 10^5$
+
+### *Example*:
+
+**Input:**
+```
+10 3
+1 4 8
+```
+
+**Output:**
+```
+9
+```
+
+**Explanation:**  
+The optimal solution is to take the first and the last bar (weights 1 and 8) for a total weight of 9.
+
+### *Approach*:
+We will use **dynamic programming** to solve this problem efficiently. We define a 2D array `dp` where `dp[i][w]` represents the maximum value of gold that can be obtained using the first `i` items and a capacity of `w`.  
+The recurrence relation used is:
+
+\[
+dp[i][w] = 
+\begin{cases} 
+\max(dp[i-1][w], dp[i-1][w-weights[i-1]] + weights[i-1]) & \text{if } weights[i-1] \leq w \\
+dp[i-1][w] & \text{if } weights[i-1] > w
+\end{cases}
+\]
+
+### *Path*:
+`/problems/dynamic_programming/35_max_amount_of_gold.py`
+
+## 36 - Splitting the Pirate Loot (UCSD)
+
+### Problem Description
+Three pirates are trying to split their loot consisting of n items of varying value. This program helps determine if it's possible to evenly split the loot into three subsets with equal sums.
+
+#### Input
+- The first line contains an integer n (1 ≤ n ≤ 20), representing the number of items.
+- The second line contains n integers v1, v2, ..., vn (1 ≤ vi ≤ 30), representing the values of the items.
+
+#### Output
+- Output 1 if it's possible to partition v1, v2, ..., vn into three subsets with equal sums, and 0 otherwise.
+
+#### Constraints
+- 1 ≤ n ≤ 20
+- 1 ≤ vi ≤ 30 for all i
+
+## Example
+
+**Input:**
+```
+4
+3 3 3 3
+```
+
+**Output:**
+```
+0
+```
+
 
 # References:
 
